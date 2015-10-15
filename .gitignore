@@ -1,0 +1,4 @@
+tmp/
+node_modules/
+public/js/*.js
+npm-debug.log

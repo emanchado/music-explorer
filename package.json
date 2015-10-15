@@ -1,0 +1,21 @@
+{
+  "name": "piano",
+  "version": "0.0.1",
+  "description": "A small web piano to explore music theory",
+  "author": "Esteban Manchado Velázquez <emanchado@demiurgo.org>",
+  "scripts": {
+    "watch": "./node_modules/.bin/watchify -vd -t babelify src/piano.js -o public/js/bundle.js"
+  },
+  "devDependencies": {
+    "babel-plugin-react-transform": "^1.1.1",
+    "babelify": "^6.3.0",
+    "browserify": "^11.2.0",
+    "watchify": "^3.4.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "ramda": "^0.18.0",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  }
+}
