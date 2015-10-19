@@ -29,6 +29,16 @@ function noteAudioUrl(octaveNumber, note) {
 
 /*jshint ignore:start */
 const PianoKey = React.createClass({
+    handleClick: function() {
+        const audioEl = this.refs.audioEl;
+
+        if (audioEl.paused) {
+            audioEl.play();
+        } else {
+            audioEl.currentTime = 0;
+        }
+    },
+
     render: function() {
         const keyTypeClassName = this.props.note.length > 1 ? 'ebony' : '',
               highlightClassName = this.props.highlightScale ? 'in-scale' : '',
@@ -43,16 +53,6 @@ const PianoKey = React.createClass({
                 <audio ref="audioEl" preload="auto" src={audioUrl} />
             </li>
         );
-    },
-
-    handleClick: function() {
-        const audioEl = this.refs.audioEl;
-
-        if (audioEl.paused) {
-            audioEl.play();
-        } else {
-            audioEl.currentTime = 0;
-        }
     }
 });
 
@@ -93,6 +93,16 @@ const MusicExplorerApp = React.createClass({
         return {scale: initialScale, key: initialKey};
     },
 
+    onChangeScale: function(e) {
+        const newScale = e.target.options[e.target.selectedIndex].value;
+        this.setState({scale: newScale});
+    },
+
+    onChangeKey: function(e) {
+        const newKey = e.target.options[e.target.selectedIndex].value;
+        this.setState({key: newKey});
+    },
+
     render: function() {
         return (
                 <div>
@@ -123,16 +133,6 @@ const MusicExplorerApp = React.createClass({
                 </div>
                 </div>
         );
-    },
-
-    onChangeScale: function(e) {
-        const newScale = e.target.options[e.target.selectedIndex].value;
-        this.setState({scale: newScale});
-    },
-
-    onChangeKey: function(e) {
-        const newKey = e.target.options[e.target.selectedIndex].value;
-        this.setState({key: newKey});
     }
 });
 
