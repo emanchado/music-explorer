@@ -4,7 +4,8 @@
   "description": "A small web piano to explore music theory",
   "author": "Esteban Manchado Velázquez <emanchado@demiurgo.org>",
   "scripts": {
-    "watch": "./node_modules/.bin/watchify -vd -t babelify src/piano.js -o public/js/bundle.js"
+    "compile": "browserify -vd -t babelify src/piano.js -o public/js/bundle.js",
+    "watch": "watchify -vd -t babelify src/piano.js -o public/js/bundle.js"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",
