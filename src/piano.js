@@ -51,7 +51,7 @@ const PianoKey = React.createClass({
         if (audioEl.paused) {
             audioEl.play();
         } else {
-            audioEl.fastSeek(0);
+            audioEl.currentTime = 0;
         }
     }
 });
