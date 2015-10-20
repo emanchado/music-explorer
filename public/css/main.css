@@ -110,3 +110,13 @@ ol.piano {
 .piano li.in-scale, .piano li.ebony.in-scale {
     color: red;
 }
+
+ul.chords li {
+    display: inline;
+}
+ul.chords li:after {
+    content: ", "
+}
+ul.chords li:last-child:after {
+    content: ""
+}

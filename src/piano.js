@@ -88,6 +88,16 @@ const Piano = React.createClass({
 });
 /*jshint ignore:end */
 
+function isChordInScale(chord, scale) {
+    const scaleNoteChromas = scale.notes().map((n) => {
+        return n.chroma();
+    });
+
+    return chord.notes().every((chordNote) => {
+        return scaleNoteChromas.indexOf(chordNote.chroma()) !== -1;
+    });
+}
+
 const MusicExplorerApp = React.createClass({
     getInitialState: function() {
         return {scale: initialScale, key: initialKey};
@@ -104,11 +114,29 @@ const MusicExplorerApp = React.createClass({
     },
 
     render: function() {
+        const scale = teoria.note(this.state.key + '4').scale(this.state.scale),
+              potentialChords = R.flatten(scale.notes().map((note) => {
+                  return ['', 'm', 'dim', 'aug'].map((chordType) => {
+                      return note.chord(chordType);
+                   });
+              })),
+              matchingChords = potentialChords.filter(function(chord) {
+                  return isChordInScale(chord, scale);
+              }),
+              matchingChordMarkup = matchingChords.map((chord) => {
+                  const onClickHandler = function() {
+                      alert(chord.name);
+                  };
+                  return (
+                          <li><a href="#" onClick={onClickHandler}>{chord.name}</a></li>
+                  );
+              });
+
         return (
                 <div>
                 <Piano scale={this.state.scale} scalekey={this.state.key} />
 
-                <div class="tools">
+                <div className="tools">
                 <select value={this.state.key} onChange={this.onChangeKey}>
                 <option value="c">C</option>
                 <option value="c#">C# / D♭</option>
@@ -130,6 +158,8 @@ const MusicExplorerApp = React.createClass({
                 <option value="blues">Blues</option>
                 <option value="phrygian">Phrygian</option>
                 </select>
+
+                <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
                 </div>
         );
