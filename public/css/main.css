@@ -1,21 +1,6 @@
 body {
     background-color: #dcdcdc;
-}
-
-h1, h2 {
-    color: #646464;
-    line-height: 1.2;
-    margin: 0 0 1rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-}
-h1 b, h2 b {
-    color: #640000;
-    text-shadow: 0px 1px 5px #CCC;
-}
-
-h1 {
-    font-family: 'Pirata One', cursive;
-    font-size: 3rem;
+    font-family: Ubuntu;
 }
 
 #contents {
@@ -42,6 +27,8 @@ ol.piano {
 
 .piano li {
     box-sizing: border-box;
+    width: 40px;
+    height: 300px;
     font-size: 16px;
     font-size: 1rem;
     background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MwYzFiZCIvPjxzdG9wIG9mZnNldD0iMTAlIiBzdG9wLWNvbG9yPSIjZjBmMGYwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmFmMGU2Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
@@ -60,7 +47,7 @@ ol.piano {
     position: relative;
     z-index: 1;
     cursor: pointer;
-    color: transparent;
+    color: #C0C1BD;
 }
 .piano li:hover {
     color: #C0C1BD;
@@ -75,13 +62,14 @@ ol.piano {
     z-index: 2;
     position: absolute;
     width: 32px;
+    height: 175px;
     top: 0px;
     margin-left: -16px;
     padding: 130px 0px 10px;
     /* Typography */
     text-align: center;
     font-size: 0.66667rem;
-    color: transparent;
+    color: gainsboro;
     border-radius: 0 0 2px 2px;
     border-width: 0 6px 12px;
     border-color: #000;
@@ -107,10 +95,28 @@ ol.piano {
     padding-top: 135px;
     color: white;
 }
-.piano li.in-scale, .piano li.ebony.in-scale {
+.piano li.in-scale .note-name, .piano li.ebony.in-scale .note-name {
     color: red;
 }
+.piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
+    color: white;
+    background-color: blue;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-left: -5px;
+}
+.piano li.ebony.in-chord .note-name {
+    width: 25px;
+    height: 25px;
+    margin-left: -2px;
+}
 
+ul.chords {
+    margin: 0;
+    padding: 0;
+}
 ul.chords li {
     display: inline;
 }
