@@ -2,10 +2,6 @@ body {
     background-color: #dcdcdc;
 }
 
-.piano audio {
-    display: none;
-}
-
 h1, h2 {
     color: #646464;
     line-height: 1.2;
@@ -29,12 +25,19 @@ h1 {
     overflow: hidden;
 }
 
-ol {
+.piano audio {
+    display: none;
+}
+
+ol.piano {
     position: relative;
     padding: 0;
     margin: 0 0 10px;
     display: inline-block;
     font-size: 0;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .piano li {
@@ -106,4 +109,21 @@ ol {
 }
 .piano li.in-scale, .piano li.ebony.in-scale {
     color: red;
+}
+.piano li.in-chord, .piano li.ebony.in-chord {
+    color: blue;
+}
+
+ul.chords {
+    margin: 0;
+    padding: 0;
+}
+ul.chords li {
+    display: inline;
+}
+ul.chords li:after {
+    content: ", "
+}
+ul.chords li:last-child:after {
+    content: ""
 }
