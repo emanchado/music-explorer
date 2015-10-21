@@ -46,13 +46,14 @@ const PianoKey = React.createClass({
               className = keyTypeClassName + ' ' + scaleHighlightClassName + ' ' + chordHighlightClassName,
               octaveNumber = this.props.octave,
               label = noteLabel(this.props.note),
-              audioUrl = noteAudioUrl(octaveNumber, this.props.note);
+              audioUrl = noteAudioUrl(octaveNumber, this.props.note),
+              audioElId = "audioEl-" + this.props.octave + "-" + this.props.note.replace("#", "s");
 
         return (
-            <li className={className} onClick={this.handleClick}>
+                <li className={className} onClick={this.handleClick}>
                 <div className="note-name">{label}</div>
-                <audio ref="audioEl" preload="auto" src={audioUrl} />
-            </li>
+                <audio id={audioElId} ref="audioEl" preload="auto" src={audioUrl} />
+                </li>
         );
     }
 });
@@ -117,10 +118,23 @@ const MusicExplorerApp = React.createClass({
         this.setState({key: newKey});
     },
 
-    highlightChordHandler: function(chord) {
+    selectChordHandler: function(chord) {
         return () => {
+            this.playNotes(chord.notes());
             this.setState({highlightChord: chord});
         };
+    },
+
+    playNotes: function(notes) {
+        for (let note of notes) {
+            let audioEl = document.getElementById("audioEl-1-" +
+                                                  note.name());
+            if (audioEl.paused) {
+                audioEl.play();
+            } else {
+                audioEl.currentTime = 0;
+            }
+        }
     },
 
     render: function() {
@@ -134,7 +148,7 @@ const MusicExplorerApp = React.createClass({
                   return isChordInScale(chord, scale);
               }),
               matchingChordMarkup = matchingChords.map((chord) => {
-                  const onClickHandler = this.highlightChordHandler(chord);
+                  const onClickHandler = this.selectChordHandler(chord);
                   return (
                           <li key={chord.name}><a href="#" onClick={onClickHandler}>{chord.name}</a></li>
                   );
