@@ -23,14 +23,17 @@ function noteLabel(note) {
     }
 }
 
-function noteAudioUrl(octaveNumber, note) {
-    return "notes/" + octaveNumber + "-" + note.replace("#", "s") + ".mp3";
+function noteAudioUrl(octaveNumber, noteName) {
+    const note = teoria.note(noteName);
+    return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
 }
 
-function playNote(octave, note) {
-    let audioEl = document.getElementById("audioEl-" +
+function playNote(octave, noteName) {
+    let note = teoria.note(noteName),
+        audioEl = document.getElementById("audioEl-" +
                                           octave +
-                                          "-" + note.replace("#", "s"));
+                                          "-" +
+                                          note.chroma());
     if (audioEl.paused) {
         audioEl.play();
     } else {
@@ -60,7 +63,8 @@ const PianoKey = React.createClass({
               octaveNumber = this.props.octave,
               label = noteLabel(this.props.note),
               audioUrl = noteAudioUrl(octaveNumber, this.props.note),
-              audioElId = "audioEl-" + this.props.octave + "-" + this.props.note.replace("#", "s");
+              note = teoria.note(this.props.note),
+              audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
 
         return (
                 <li className={className} onClick={this.handleClick}>
@@ -125,15 +129,11 @@ const MusicExplorerApp = React.createClass({
 
     selectChordHandler: function(chord) {
         return () => {
-            this.playNotes(chord.notes());
+            for (let note of chord.simple()) {
+                playNote(1, note);
+            }
             this.setState({highlightChord: chord});
         };
-    },
-
-    playNotes: function(notes) {
-        for (let note of notes) {
-            playNote(1, note.name());
-        }
     },
 
     render: function() {
