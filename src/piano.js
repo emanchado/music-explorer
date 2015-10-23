@@ -27,16 +27,29 @@ function noteAudioUrl(octaveNumber, note) {
     return "notes/" + octaveNumber + "-" + note.replace("#", "s") + ".mp3";
 }
 
+function playNote(octave, note) {
+    let audioEl = document.getElementById("audioEl-" +
+                                          octave +
+                                          "-" + note.replace("#", "s"));
+    if (audioEl.paused) {
+        audioEl.play();
+    } else {
+        audioEl.currentTime = 0;
+    }
+}
+
+function noteInNoteGroup(noteName, group) {
+    const note = teoria.note(noteName);
+
+    return group && group.notes().some(function(groupNote) {
+        return groupNote.chroma() === note.chroma();
+    });
+}
+
 /*jshint ignore:start */
 const PianoKey = React.createClass({
     handleClick: function() {
-        const audioEl = this.refs.audioEl;
-
-        if (audioEl.paused) {
-            audioEl.play();
-        } else {
-            audioEl.currentTime = 0;
-        }
+        playNote(this.props.octave, this.props.note);
     },
 
     render: function() {
@@ -52,29 +65,21 @@ const PianoKey = React.createClass({
         return (
                 <li className={className} onClick={this.handleClick}>
                 <div className="note-name">{label}</div>
-                <audio id={audioElId} ref="audioEl" preload="auto" src={audioUrl} />
+                <audio id={audioElId} preload="auto" src={audioUrl} />
                 </li>
         );
     }
 });
 
-function noteInNoteGroup(noteName, group) {
-    const note = teoria.note(noteName);
-
-    return group && group.notes().some(function(groupNote) {
-        return groupNote.chroma() === note.chroma();
-    });
-}
-
 const Piano = React.createClass({
     render: function() {
-        const octaveKeys = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
-                            "a", "a#", "b"],
+        const octaveNotes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
+                             "a", "a#", "b"],
               currentScale = teoria.note(this.props.scalekey +
                                          '4').scale(this.props.scale),
               highlightChord = this.props.highlightChord,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map(function(octaveNumber) {
-                  return octaveKeys.map(function(note) {
+                  return octaveNotes.map(function(note) {
                       let reactKey = (octaveNumber + 1) + "-" + note,
                           inScale = noteInNoteGroup(note, currentScale),
                           inChord = noteInNoteGroup(note, highlightChord);
@@ -127,13 +132,7 @@ const MusicExplorerApp = React.createClass({
 
     playNotes: function(notes) {
         for (let note of notes) {
-            let audioEl = document.getElementById("audioEl-1-" +
-                                                  note.name());
-            if (audioEl.paused) {
-                audioEl.play();
-            } else {
-                audioEl.currentTime = 0;
-            }
+            playNote(1, note.name());
         }
     },
 
