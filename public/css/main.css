@@ -47,7 +47,7 @@ ol.piano {
     position: relative;
     z-index: 1;
     cursor: pointer;
-    color: #C0C1BD;
+    color: #ddc;
 }
 .piano li:hover {
     color: #C0C1BD;
@@ -69,7 +69,7 @@ ol.piano {
     /* Typography */
     text-align: center;
     font-size: 0.66667rem;
-    color: gainsboro;
+    color: #555;
     border-radius: 0 0 2px 2px;
     border-width: 0 6px 12px;
     border-color: #000;
@@ -96,7 +96,7 @@ ol.piano {
     color: white;
 }
 .piano li.in-scale .note-name, .piano li.ebony.in-scale .note-name {
-    color: red;
+    color: #33f;
 }
 .piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
     color: white;
