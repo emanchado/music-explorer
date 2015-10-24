@@ -13,7 +13,7 @@ const noteNames = {
     "a#": "A# B♭"
 };
 
-const initialScale = 'major', initialKey = 'c';
+const initialScale = 'major', initialKey = '';
 
 function noteLabel(note) {
     if (noteNames.hasOwnProperty(note)) {
@@ -23,10 +23,6 @@ function noteLabel(note) {
     }
 }
 
-function noteAudioUrl(octaveNumber, noteName) {
-    const note = teoria.note(noteName);
-    return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
-}
 
 function playNote(octave, noteName) {
     let note = teoria.note(noteName),
@@ -41,16 +37,13 @@ function playNote(octave, noteName) {
     }
 }
 
-function noteInNoteGroup(noteName, group) {
-    const note = teoria.note(noteName);
-
-    return group && group.notes().some(function(groupNote) {
-        return groupNote.chroma() === note.chroma();
-    });
-}
-
 /*jshint ignore:start */
 const PianoKey = React.createClass({
+    noteAudioUrl: function (octaveNumber, noteName) {
+        const note = teoria.note(noteName);
+        return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
+    },
+
     handleClick: function() {
         playNote(this.props.octave, this.props.note);
     },
@@ -60,9 +53,8 @@ const PianoKey = React.createClass({
               scaleHighlightClassName = this.props.highlightScale ? 'in-scale' : '',
               chordHighlightClassName = this.props.highlightChord ? 'in-chord' : '',
               className = keyTypeClassName + ' ' + scaleHighlightClassName + ' ' + chordHighlightClassName,
-              octaveNumber = this.props.octave,
               label = noteLabel(this.props.note),
-              audioUrl = noteAudioUrl(octaveNumber, this.props.note),
+              audioUrl = this.noteAudioUrl(this.props.octave, this.props.note),
               note = teoria.note(this.props.note),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
 
@@ -75,18 +67,30 @@ const PianoKey = React.createClass({
     }
 });
 
+const octaveNotes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
+                     "a", "a#", "b"];
+
 const Piano = React.createClass({
+    noteInNoteGroup: function (noteName, group) {
+        const note = teoria.note(noteName);
+
+        return group && group.notes().some(function(groupNote) {
+            return groupNote.chroma() === note.chroma();
+        });
+    },
+
     render: function() {
-        const octaveNotes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
-                             "a", "a#", "b"],
-              currentScale = teoria.note(this.props.scalekey +
-                                         '4').scale(this.props.scale),
-              highlightChord = this.props.highlightChord,
-              keys = R.flatten(R.range(0, NUMBER_OCTAVES).map(function(octaveNumber) {
-                  return octaveNotes.map(function(note) {
+        const scaleKeyName = this.props.scalekey,
+              scaleName = this.props.scale,
+              currentScale = (scaleKeyName && scaleName) ?
+                  teoria.note(scaleKeyName + '4').scale(scaleName) :
+                  null,
+              keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
+                  return octaveNotes.map((note) => {
                       let reactKey = (octaveNumber + 1) + "-" + note,
-                          inScale = noteInNoteGroup(note, currentScale),
-                          inChord = noteInNoteGroup(note, highlightChord);
+                          inScale = this.noteInNoteGroup(note, currentScale),
+                          inChord = this.noteInNoteGroup(note,
+                                                         this.props.highlightChord);
                       return (
                               <PianoKey octave={octaveNumber+1} key={reactKey} note={note} highlightScale={inScale} highlightChord={inChord} />
                       );
@@ -119,12 +123,12 @@ const MusicExplorerApp = React.createClass({
 
     onChangeScale: function(e) {
         const newScale = e.target.options[e.target.selectedIndex].value;
-        this.setState({scale: newScale});
+        this.setState({scale: newScale, highlightChord: null});
     },
 
     onChangeKey: function(e) {
         const newKey = e.target.options[e.target.selectedIndex].value;
-        this.setState({key: newKey});
+        this.setState({key: newKey, highlightChord: null});
     },
 
     selectChordHandler: function(chord) {
@@ -137,21 +141,33 @@ const MusicExplorerApp = React.createClass({
     },
 
     render: function() {
-        const scale = teoria.note(this.state.key + '4').scale(this.state.scale),
-              potentialChords = R.flatten(scale.notes().map((note) => {
-                  return ['', 'm', 'dim', 'aug'].map((chordType) => {
-                      return note.chord(chordType);
-                   });
-              })),
-              matchingChords = potentialChords.filter(function(chord) {
-                  return isChordInScale(chord, scale);
-              }),
-              matchingChordMarkup = matchingChords.map((chord) => {
-                  const onClickHandler = this.selectChordHandler(chord);
-                  return (
-                          <li key={chord.name}><a href="#" onClick={onClickHandler}>{chord.name}</a></li>
-                  );
-              });
+        const scale = (this.state.key && this.state.scale) ?
+                  teoria.note(this.state.key + '4').scale(this.state.scale) :
+                  null;
+        let matchingChordMarkup;
+
+        if (scale) {
+            const potentialChords = R.flatten(scale.notes().map((note) => {
+                return ['', 'm', 'dim', 'aug'].map((chordType) => {
+                    return note.chord(chordType);
+                 });
+             }));
+
+            const matchingChords = potentialChords.filter(function(chord) {
+                return isChordInScale(chord, scale);
+            });
+
+            matchingChordMarkup = matchingChords.map((chord) => {
+                const onClickHandler = this.selectChordHandler(chord);
+                return (
+                        <li key={chord.name}><a href="#" onClick={onClickHandler}>{chord.name}</a></li>
+                );
+            });
+        } else {
+            matchingChordMarkup = (
+                    <em>Select key/scale to show basic matching chords</em>
+            );
+        }
 
         return (
                 <div>
@@ -159,6 +175,7 @@ const MusicExplorerApp = React.createClass({
 
                 <div className="tools">
                 <select value={this.state.key} onChange={this.onChangeKey}>
+                <option value="">Choose a key</option>
                 <option value="c">C</option>
                 <option value="c#">C# / D♭</option>
                 <option value="d">D</option>
