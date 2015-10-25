@@ -37,7 +37,6 @@ function playNote(octave, noteName) {
     }
 }
 
-/*jshint ignore:start */
 const PianoKey = React.createClass({
     noteAudioUrl: function (octaveNumber, noteName) {
         const note = teoria.note(noteName);
@@ -59,10 +58,10 @@ const PianoKey = React.createClass({
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
 
         return (
-                <li className={className} onClick={this.handleClick}>
-                <div className="note-name">{label}</div>
-                <audio id={audioElId} preload="auto" src={audioUrl} />
-                </li>
+            <li className={className} onClick={this.handleClick}>
+              <div className="note-name">{label}</div>
+              <audio id={audioElId} preload="auto" src={audioUrl} />
+            </li>
         );
     }
 });
@@ -92,19 +91,22 @@ const Piano = React.createClass({
                           inChord = this.noteInNoteGroup(note,
                                                          this.props.highlightChord);
                       return (
-                              <PianoKey octave={octaveNumber+1} key={reactKey} note={note} highlightScale={inScale} highlightChord={inChord} />
+                          <PianoKey octave={octaveNumber+1}
+                                    key={reactKey}
+                                    note={note}
+                                    highlightScale={inScale}
+                                    highlightChord={inChord} />
                       );
                   });
               }));
 
         return (
             <ol className="piano">
-                {keys}
+              {keys}
             </ol>
         );
     }
 });
-/*jshint ignore:end */
 
 function isChordInScale(chord, scale) {
     const scaleNoteChromas = scale.notes().map((n) => {
@@ -160,56 +162,56 @@ const MusicExplorerApp = React.createClass({
             matchingChordMarkup = matchingChords.map((chord) => {
                 const onClickHandler = this.selectChordHandler(chord);
                 return (
-                        <li key={chord.name}><a href="#" onClick={onClickHandler}>{chord.name}</a></li>
+                    <li key={chord.name}>
+                      <a href="#" onClick={onClickHandler}>{chord.name}</a>
+                    </li>
                 );
             });
         } else {
             matchingChordMarkup = (
-                    <em>Select key/scale to show basic matching chords</em>
+                <em>Select key/scale to show basic matching chords</em>
             );
         }
 
         return (
-                <div>
-                <Piano scale={this.state.scale} scalekey={this.state.key} highlightChord={this.state.highlightChord} />
+            <div>
+              <Piano scale={this.state.scale} scalekey={this.state.key} highlightChord={this.state.highlightChord} />
 
-                <div className="tools">
+              <div className="tools">
                 <select value={this.state.key} onChange={this.onChangeKey}>
-                <option value="">Choose a key</option>
-                <option value="c">C</option>
-                <option value="c#">C# / D♭</option>
-                <option value="d">D</option>
-                <option value="d#">D# / E♭</option>
-                <option value="e">E</option>
-                <option value="f">F</option>
-                <option value="f#">F# / G♭</option>
-                <option value="g">G</option>
-                <option value="g#">G# / A♭</option>
-                <option value="a">A</option>
-                <option value="a#">A# / B♭</option>
-                <option value="b">B</option>
+                  <option value="">Choose a key</option>
+                  <option value="c">C</option>
+                  <option value="c#">C# / D♭</option>
+                  <option value="d">D</option>
+                  <option value="d#">D# / E♭</option>
+                  <option value="e">E</option>
+                  <option value="f">F</option>
+                  <option value="f#">F# / G♭</option>
+                  <option value="g">G</option>
+                  <option value="g#">G# / A♭</option>
+                  <option value="a">A</option>
+                  <option value="a#">A# / B♭</option>
+                  <option value="b">B</option>
                 </select>
 
                 <select value={this.state.scale} onChange={this.onChangeScale}>
-                <option value="major">Major</option>
-                <option value="minor">Minor</option>
-                <option value="blues">Blues</option>
-                <option value="phrygian">Phrygian</option>
+                  <option value="major">Major</option>
+                  <option value="minor">Minor</option>
+                  <option value="blues">Blues</option>
+                  <option value="phrygian">Phrygian</option>
                 </select>
 
                 <div>
-                Matching chords:
-                <ul className="chords">{matchingChordMarkup}</ul>
+                  Matching chords:
+                  <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
-                </div>
-                </div>
+              </div>
+            </div>
         );
     }
 });
 
 ReactDOM.render(
-    /*jshint ignore:start */
-        <MusicExplorerApp />,
-    /*jshint ignore:end */
+    <MusicExplorerApp />,
     document.getElementById('contents')
 );
