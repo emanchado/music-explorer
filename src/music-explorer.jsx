@@ -225,7 +225,22 @@ const MusicExplorerApp = React.createClass({
         for (let note of chord.simple()) {
             playNote(1, note);
         }
-        this.setState({highlightChord: chord});
+        this.setState({highlightChord: chord,
+                       chordName: chord.name});
+    },
+
+    onChangeChordName: function(e) {
+        const newChordName = e.target.value;
+        this.setState({chordName: newChordName});
+    },
+
+    onClickHighlightChord: function(/*e*/) {
+        try {
+            const newChord = teoria.chord(this.state.chordName);
+            this.onSelectChord(newChord);
+        } catch (e) {
+            console.log("Ignoring unknown chord '" + this.state.chordName + "'");
+        }
     },
 
     render: function() {
@@ -238,6 +253,13 @@ const MusicExplorerApp = React.createClass({
                              onChangeKey={this.onChangeKey}
                              onChangeScale={this.onChangeScale}
                              onSelectChord={this.onSelectChord} />
+
+              Highlight chord:
+              <input type="text"
+                     value={this.state.chordName}
+                     onChange={this.onChangeChordName} />
+              <button type="submit"
+                      onClick={this.onClickHighlightChord}>Highlight</button>
             </div>
         );
     }

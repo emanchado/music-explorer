@@ -98,9 +98,23 @@ ol.piano {
 .piano li.in-scale .note-name, .piano li.ebony.in-scale .note-name {
     color: #33f;
 }
-.piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
+.piano li.in-chord.in-scale .note-name, .piano li.ebony.in-chord.in-scale .note-name {
     color: white;
     background-color: blue;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-left: -5px;
+}
+.piano li.ebony.in-chord.in-scale .note-name {
+    width: 25px;
+    height: 25px;
+    margin-left: -2px;
+}
+.piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
+    color: white;
+    background-color: red;
     border-radius: 50%;
     width: 20px;
     height: 20px;
