@@ -108,6 +108,87 @@ const Piano = React.createClass({
     }
 });
 
+const ScaleSelector = React.createClass({
+    onChangeKey: function(e) {
+        const newKey = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeKey(newKey);
+    },
+
+    onChangeScale: function(e) {
+        const newScale = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeScale(newScale);
+    },
+
+    chordSelectionHandler: function(chordName) {
+        return (/*e*/) => {
+            this.props.onSelectChord(chordName);
+        };
+    },
+
+    render: function() {
+        const scale = (this.props.keyName && this.props.scaleName) ?
+                      teoria.note(this.props.keyName + '4').scale(this.props.scaleName) :
+                      null;
+        let matchingChordMarkup;
+
+        if (scale) {
+            const potentialChords = R.flatten(scale.notes().map((note) => {
+                return ['', 'm', 'dim', 'aug'].map((chordType) => {
+                    return note.chord(chordType);
+                });
+            }));
+
+            const matchingChords = potentialChords.filter(function(chord) {
+                return isChordInScale(chord, scale);
+            });
+
+            matchingChordMarkup = matchingChords.map((chord) => {
+                return (
+                    <li key={chord.name}>
+                      <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
+                    </li>
+                );
+            });
+        } else {
+            matchingChordMarkup = (
+                <em>Select key/scale to show basic matching chords</em>
+            );
+        }
+
+        return (
+            <div>
+              <select value={this.props.keyName} onChange={this.onChangeKey}>
+                <option value="">Choose a key</option>
+                <option value="c">C</option>
+                <option value="c#">C# / D♭</option>
+                <option value="d">D</option>
+                <option value="d#">D# / E♭</option>
+                <option value="e">E</option>
+                <option value="f">F</option>
+                <option value="f#">F# / G♭</option>
+                <option value="g">G</option>
+                <option value="g#">G# / A♭</option>
+                <option value="a">A</option>
+                <option value="a#">A# / B♭</option>
+                <option value="b">B</option>
+              </select>
+
+              <select value={this.props.scaleName} onChange={this.onChangeScale}>
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+                <option value="blues">Blues</option>
+                <option value="phrygian">Phrygian</option>
+              </select>
+
+              <div>
+                Matching chords for :
+                <ul className="chords">{matchingChordMarkup}</ul>
+              </div>
+            </div>
+        );
+    }
+});
+
 function isChordInScale(chord, scale) {
     const scaleNoteChromas = scale.notes().map((n) => {
         return n.chroma();
@@ -123,13 +204,11 @@ const MusicExplorerApp = React.createClass({
         return {scale: initialScale, key: initialKey};
     },
 
-    onChangeScale: function(e) {
-        const newScale = e.target.options[e.target.selectedIndex].value;
+    onChangeScale: function(newScale) {
         this.setState({scale: newScale, highlightChord: null});
     },
 
-    onChangeKey: function(e) {
-        const newKey = e.target.options[e.target.selectedIndex].value;
+    onChangeKey: function(newKey) {
         this.setState({key: newKey, highlightChord: null});
     },
 
@@ -142,70 +221,23 @@ const MusicExplorerApp = React.createClass({
         };
     },
 
-    render: function() {
-        const scale = (this.state.key && this.state.scale) ?
-                  teoria.note(this.state.key + '4').scale(this.state.scale) :
-                  null;
-        let matchingChordMarkup;
-
-        if (scale) {
-            const potentialChords = R.flatten(scale.notes().map((note) => {
-                return ['', 'm', 'dim', 'aug'].map((chordType) => {
-                    return note.chord(chordType);
-                 });
-             }));
-
-            const matchingChords = potentialChords.filter(function(chord) {
-                return isChordInScale(chord, scale);
-            });
-
-            matchingChordMarkup = matchingChords.map((chord) => {
-                const onClickHandler = this.selectChordHandler(chord);
-                return (
-                    <li key={chord.name}>
-                      <a href="#" onClick={onClickHandler}>{chord.name}</a>
-                    </li>
-                );
-            });
-        } else {
-            matchingChordMarkup = (
-                <em>Select key/scale to show basic matching chords</em>
-            );
+    onSelectChord: function(chord) {
+        for (let note of chord.simple()) {
+            playNote(1, note);
         }
+        this.setState({highlightChord: chord});
+    },
 
+    render: function() {
         return (
             <div>
               <Piano scale={this.state.scale} scalekey={this.state.key} highlightChord={this.state.highlightChord} />
 
-              <div className="tools">
-                <select value={this.state.key} onChange={this.onChangeKey}>
-                  <option value="">Choose a key</option>
-                  <option value="c">C</option>
-                  <option value="c#">C# / D♭</option>
-                  <option value="d">D</option>
-                  <option value="d#">D# / E♭</option>
-                  <option value="e">E</option>
-                  <option value="f">F</option>
-                  <option value="f#">F# / G♭</option>
-                  <option value="g">G</option>
-                  <option value="g#">G# / A♭</option>
-                  <option value="a">A</option>
-                  <option value="a#">A# / B♭</option>
-                  <option value="b">B</option>
-                </select>
-
-                <select value={this.state.scale} onChange={this.onChangeScale}>
-                  <option value="major">Major</option>
-                  <option value="minor">Minor</option>
-                  <option value="blues">Blues</option>
-                  <option value="phrygian">Phrygian</option>
-                </select>
-
-                <div>
-                  Matching chords:
-                  <ul className="chords">{matchingChordMarkup}</ul>
-                </div>
-              </div>
+              <ScaleSelector keyName={this.state.key}
+                             scaleName={this.state.scale}
+                             onChangeKey={this.onChangeKey}
+                             onChangeScale={this.onChangeScale}
+                             onSelectChord={this.onSelectChord} />
             </div>
         );
     }
