@@ -1,11 +1,11 @@
 {
-  "name": "piano",
+  "name": "music-explorer",
   "version": "0.0.1",
-  "description": "A small web piano to explore music theory",
+  "description": "A small web piano to learn and explore music theory",
   "author": "Esteban Manchado Velázquez <emanchado@demiurgo.org>",
   "scripts": {
-    "compile": "browserify -vd -t babelify src/piano.jsx -o public/js/bundle.js",
-    "watch": "watchify -vd -t babelify src/piano.jsx -o public/js/bundle.js"
+    "compile": "browserify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js",
+    "watch": "watchify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",
