@@ -108,17 +108,7 @@ const Piano = React.createClass({
     }
 });
 
-const ScaleSelector = React.createClass({
-    onChangeKey: function(e) {
-        const newKey = e.target.options[e.target.selectedIndex].value;
-        this.props.onChangeKey(newKey);
-    },
-
-    onChangeScale: function(e) {
-        const newScale = e.target.options[e.target.selectedIndex].value;
-        this.props.onChangeScale(newScale);
-    },
-
+const MatchingChords = React.createClass({
     chordSelectionHandler: function(chordName) {
         return (/*e*/) => {
             this.props.onSelectChord(chordName);
@@ -155,6 +145,33 @@ const ScaleSelector = React.createClass({
             );
         }
 
+        if (scale) {
+            return (
+                <div>
+                  Matching chords for {scale.name}:
+                  <ul className="chords">{matchingChordMarkup}</ul>
+                </div>
+            );
+        } else {
+            return (
+                <div></div>
+            );
+        }
+    }
+});
+
+const ScaleSelector = React.createClass({
+    onChangeKey: function(e) {
+        const newKey = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeKey(newKey);
+    },
+
+    onChangeScale: function(e) {
+        const newScale = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeScale(newScale);
+    },
+
+    render: function() {
         return (
             <div>
               <select value={this.props.keyName} onChange={this.onChangeKey}>
@@ -180,10 +197,9 @@ const ScaleSelector = React.createClass({
                 <option value="phrygian">Phrygian</option>
               </select>
 
-              <div>
-                Matching chords for :
-                <ul className="chords">{matchingChordMarkup}</ul>
-              </div>
+              <MatchingChords keyName={this.props.keyName}
+                              scaleName={this.props.scaleName}
+                              onSelectChord={this.props.onSelectChord} />
             </div>
         );
     }
@@ -255,11 +271,15 @@ const MusicExplorerApp = React.createClass({
                              onSelectChord={this.onSelectChord} />
 
               Highlight chord:
-              <input type="text"
-                     value={this.state.chordName}
-                     onChange={this.onChangeChordName} />
-              <button type="submit"
-                      onClick={this.onClickHighlightChord}>Highlight</button>
+              <div>
+                <input type="text"
+                       size="7"
+                       className="chord-name"
+                       value={this.state.chordName}
+                       onChange={this.onChangeChordName} />
+                <button type="submit"
+                        onClick={this.onClickHighlightChord}>Highlight</button>
+              </div>
             </div>
         );
     }

@@ -1,6 +1,6 @@
 body {
     background-color: #dcdcdc;
-    font-family: Ubuntu;
+    font-family: Ubuntu, sans-serif;
 }
 
 #contents {
@@ -139,4 +139,8 @@ ul.chords li:after {
 }
 ul.chords li:last-child:after {
     content: ""
+}
+
+.chord-name {
+    font-size: 200%;
 }
