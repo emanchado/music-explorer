@@ -144,3 +144,6 @@ ul.chords li:last-child:after {
 .chord-name {
     font-size: 200%;
 }
+.chord-name.wrong {
+    color: red;
+}

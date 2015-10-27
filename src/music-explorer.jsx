@@ -260,6 +260,14 @@ const MusicExplorerApp = React.createClass({
     },
 
     render: function() {
+        let chord,
+            chordBoxCss = "chord-name";
+        try {
+            chord = teoria.chord(this.state.chordName);
+        } catch (e) {
+            chordBoxCss += " wrong";
+        }
+
         return (
             <div>
               <Piano scale={this.state.scale} scalekey={this.state.key} highlightChord={this.state.highlightChord} />
@@ -274,7 +282,7 @@ const MusicExplorerApp = React.createClass({
               <div>
                 <input type="text"
                        size="7"
-                       className="chord-name"
+                       className={chordBoxCss}
                        value={this.state.chordName}
                        onChange={this.onChangeChordName} />
                 <button type="submit"
