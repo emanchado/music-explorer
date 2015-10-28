@@ -223,11 +223,11 @@ const MusicExplorerApp = React.createClass({
     },
 
     onChangeScale: function(newScale) {
-        this.setState({scale: newScale, highlightChord: null});
+        this.setState({scale: newScale});
     },
 
     onChangeKey: function(newKey) {
-        this.setState({key: newKey, highlightChord: null});
+        this.setState({key: newKey});
     },
 
     onSelectChord: function(chord) {
