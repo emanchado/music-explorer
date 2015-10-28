@@ -44,18 +44,31 @@ const PianoKey = React.createClass({
     },
 
     handleClick: function() {
-        playNote(this.props.octave, this.props.note);
+        playNote(this.props.octave, this.props.noteName);
+    },
+
+    noteInNoteGroup: function (note, group) {
+        return group && group.notes().some(function(groupNote) {
+            return groupNote.chroma() === note.chroma();
+        });
     },
 
     render: function() {
-        const keyTypeClassName = this.props.note.length > 1 ? 'ebony' : '',
-              scaleHighlightClassName = this.props.highlightScale ? 'in-scale' : '',
-              chordHighlightClassName = this.props.highlightChord ? 'in-chord' : '',
-              className = keyTypeClassName + ' ' + scaleHighlightClassName + ' ' + chordHighlightClassName,
-              label = noteLabel(this.props.note),
-              audioUrl = this.noteAudioUrl(this.props.octave, this.props.note),
-              note = teoria.note(this.props.note),
+        const note = teoria.note(this.props.noteName),
+              inScale = this.noteInNoteGroup(note, this.props.scale),
+              inChord = this.noteInNoteGroup(note, this.props.chord),
+              label = noteLabel(this.props.noteName),
+              audioUrl = this.noteAudioUrl(this.props.octave,
+                                           this.props.noteName),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
+
+        const scaleInclusionClassName = inScale ? 'in-scale' : 'out-scale',
+              scaleHighlightClassName = this.props.scale ?
+                                        scaleInclusionClassName : '',
+              chordHighlightClassName = inChord ? 'in-chord' : '',
+              className = (note.accidental().length ? 'ebony' : '') + ' ' +
+                          scaleHighlightClassName + ' ' +
+                          chordHighlightClassName;
 
         return (
             <li className={className} onClick={this.handleClick}>
@@ -70,14 +83,6 @@ const octaveNotes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
                      "a", "a#", "b"];
 
 const Piano = React.createClass({
-    noteInNoteGroup: function (noteName, group) {
-        const note = teoria.note(noteName);
-
-        return group && group.notes().some(function(groupNote) {
-            return groupNote.chroma() === note.chroma();
-        });
-    },
-
     render: function() {
         const scaleKeyName = this.props.scalekey,
               scaleName = this.props.scale,
@@ -86,16 +91,13 @@ const Piano = React.createClass({
                   null,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
                   return octaveNotes.map((note) => {
-                      let reactKey = (octaveNumber + 1) + "-" + note,
-                          inScale = this.noteInNoteGroup(note, currentScale),
-                          inChord = this.noteInNoteGroup(note,
-                                                         this.props.highlightChord);
+                      let reactKey = (octaveNumber + 1) + "-" + note;
                       return (
                           <PianoKey octave={octaveNumber+1}
                                     key={reactKey}
-                                    note={note}
-                                    highlightScale={inScale}
-                                    highlightChord={inChord} />
+                                    noteName={note}
+                                    scale={currentScale}
+                                    chord={this.props.highlightChord} />
                       );
                   });
               }));
@@ -275,7 +277,9 @@ const MusicExplorerApp = React.createClass({
 
         return (
             <div>
-              <Piano scale={this.state.scale} scalekey={this.state.key} highlightChord={this.state.highlightChord} />
+              <Piano scale={this.state.scale}
+                     scalekey={this.state.key}
+                     highlightChord={this.state.highlightChord} />
 
               <ScaleSelector keyName={this.state.key}
                              scaleName={this.state.scale}
