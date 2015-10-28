@@ -1,6 +1,6 @@
 body {
     background-color: #dcdcdc;
-    font-family: Ubuntu;
+    font-family: Ubuntu, sans-serif;
 }
 
 #contents {
@@ -98,23 +98,9 @@ ol.piano {
 .piano li.in-scale .note-name, .piano li.ebony.in-scale .note-name {
     color: #33f;
 }
-.piano li.in-chord.in-scale .note-name, .piano li.ebony.in-chord.in-scale .note-name {
-    color: white;
-    background-color: blue;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    margin-left: -5px;
-}
-.piano li.ebony.in-chord.in-scale .note-name {
-    width: 25px;
-    height: 25px;
-    margin-left: -2px;
-}
 .piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
     color: white;
-    background-color: red;
+    background-color: blue;
     border-radius: 50%;
     width: 20px;
     height: 20px;
@@ -125,6 +111,9 @@ ol.piano {
     width: 25px;
     height: 25px;
     margin-left: -2px;
+}
+.piano li.in-chord.out-scale .note-name, .piano li.ebony.in-chord.out-scale .note-name {
+    background-color: red;
 }
 
 ul.chords {
@@ -139,4 +128,11 @@ ul.chords li:after {
 }
 ul.chords li:last-child:after {
     content: ""
+}
+
+.chord-name {
+    font-size: 200%;
+}
+.chord-name.wrong {
+    color: red;
 }
