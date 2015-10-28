@@ -265,7 +265,12 @@ const MusicExplorerApp = React.createClass({
         try {
             chord = teoria.chord(this.state.chordName);
         } catch (e) {
-            chordBoxCss += " wrong";
+            // Only mark as wrong if the chordName isn't empty, as
+            // it's irritating that the cursor turns red on an empty
+            // textbox
+            if (this.state.chordName && this.state.chordName.length) {
+                chordBoxCss += " wrong";
+            }
         }
 
         return (
