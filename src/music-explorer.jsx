@@ -230,15 +230,6 @@ const MusicExplorerApp = React.createClass({
         this.setState({key: newKey, highlightChord: null});
     },
 
-    selectChordHandler: function(chord) {
-        return () => {
-            for (let note of chord.simple()) {
-                playNote(1, note);
-            }
-            this.setState({highlightChord: chord});
-        };
-    },
-
     onSelectChord: function(chord) {
         for (let note of chord.simple()) {
             playNote(1, note);
