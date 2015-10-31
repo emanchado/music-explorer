@@ -22,4 +22,5 @@ in a visual way, with an interactive piano. It might also be useful
 for inspiration and maybe even to help write some songs.
 
 Technically, it's a small experiment to learn React, more EcmaScript
-6, and a bit more music theory.
+6, and a bit more music theory. The HTML and CSS was shamelessly
+stolen from http://codepen.io/garypaul/pen/jgKqc.
