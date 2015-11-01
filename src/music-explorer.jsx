@@ -47,16 +47,48 @@ const PianoKey = React.createClass({
         playNote(this.props.octave, this.props.noteName);
     },
 
-    noteInNoteGroup: function (note, group) {
-        return group && group.notes().some(function(groupNote) {
-            return groupNote.chroma() === note.chroma();
+    noteInScale: function (note, scale) {
+        return scale && scale.notes().some(function(scaleNote) {
+            return scaleNote.chroma() === note.chroma();
         });
+    },
+
+    noteRoleInChord: function (note, chord) {
+        var role = null;
+
+        if (chord) {
+            chord.notes().forEach(function(chordNote) {
+                if (chordNote.chroma() === note.chroma()) {
+                    role = chord.root.interval(chordNote);
+                }
+            });
+        }
+
+        return role;
+    },
+
+    roleInChordDiv: function(roleInChord) {
+        if (!roleInChord) {
+            return (
+                <div className="note-role">&nbsp;</div>
+            );
+        } else if (roleInChord.toString() === 'P1') {
+            // Want to show as "R" (for "root"), not as P1. Also, mark
+            // with a CSS class because it's kind of special
+            return (
+                <div className="note-role note-role-root">R</div>
+            );
+        } else {
+            return (
+                <div className="note-role">{roleInChord.toString()}</div>
+            );
+        }
     },
 
     render: function() {
         const note = teoria.note(this.props.noteName),
-              inScale = this.noteInNoteGroup(note, this.props.scale),
-              inChord = this.noteInNoteGroup(note, this.props.chord),
+              inScale = this.noteInScale(note, this.props.scale),
+              roleInChord = this.noteRoleInChord(note, this.props.chord),
               label = noteLabel(this.props.noteName),
               audioUrl = this.noteAudioUrl(this.props.octave,
                                            this.props.noteName),
@@ -65,14 +97,17 @@ const PianoKey = React.createClass({
         const scaleInclusionClassName = inScale ? 'in-scale' : 'out-scale',
               scaleHighlightClassName = this.props.scale ?
                                         scaleInclusionClassName : '',
-              chordHighlightClassName = inChord ? 'in-chord' : '',
+              chordHighlightClassName = roleInChord ? 'in-chord' : '',
               className = (note.accidental().length ? 'ebony' : '') + ' ' +
                           scaleHighlightClassName + ' ' +
                           chordHighlightClassName;
 
         return (
             <li className={className} onClick={this.handleClick}>
-              <div className="note-name">{label}</div>
+              <div className="note">
+                {this.roleInChordDiv(roleInChord)}
+                <div className="note-name">{label}</div>
+              </div>
               <audio id={audioElId} preload="auto" src={audioUrl} />
             </li>
         );
@@ -87,8 +122,8 @@ const Piano = React.createClass({
         const scaleKeyName = this.props.scalekey,
               scaleName = this.props.scale,
               currentScale = (scaleKeyName && scaleName) ?
-                  teoria.note(scaleKeyName + '4').scale(scaleName) :
-                  null,
+                             teoria.note(scaleKeyName + '4').scale(scaleName) :
+                             null,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
                   return octaveNotes.map((note) => {
                       let reactKey = (octaveNumber + 1) + "-" + note;
@@ -131,104 +166,104 @@ const MatchingChords = React.createClass({
             }));
 
             const matchingChords = potentialChords.filter(function(chord) {
-                return isChordInScale(chord, scale);
-            });
+                    return isChordInScale(chord, scale);
+                });
 
-            matchingChordMarkup = matchingChords.map((chord) => {
-                return (
-                    <li key={chord.name}>
-                      <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
-                    </li>
+                matchingChordMarkup = matchingChords.map((chord) => {
+                    return (
+                        <li key={chord.name}>
+                          <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
+                        </li>
+                    );
+                });
+            } else {
+                matchingChordMarkup = (
+                    <em>Select key/scale to show basic matching chords</em>
                 );
-            });
-        } else {
-            matchingChordMarkup = (
-                <em>Select key/scale to show basic matching chords</em>
-            );
-        }
+            }
 
-        if (scale) {
+            if (scale) {
+                return (
+                    <div>
+                      Matching chords for {scale.name}:
+                      <ul className="chords">{matchingChordMarkup}</ul>
+                    </div>
+                );
+            } else {
+                return (
+                    <div></div>
+                );
+            }
+        }
+    });
+
+    const ScaleSelector = React.createClass({
+        onChangeKey: function(e) {
+            const newKey = e.target.options[e.target.selectedIndex].value;
+            this.props.onChangeKey(newKey);
+        },
+
+        onChangeScale: function(e) {
+            const newScale = e.target.options[e.target.selectedIndex].value;
+            this.props.onChangeScale(newScale);
+        },
+
+        render: function() {
             return (
                 <div>
-                  Matching chords for {scale.name}:
-                  <ul className="chords">{matchingChordMarkup}</ul>
+                  <select value={this.props.keyName} onChange={this.onChangeKey}>
+                    <option value="">Choose a key</option>
+                    <option value="c">C</option>
+                    <option value="c#">C# / D♭</option>
+                    <option value="d">D</option>
+                    <option value="d#">D# / E♭</option>
+                    <option value="e">E</option>
+                    <option value="f">F</option>
+                    <option value="f#">F# / G♭</option>
+                    <option value="g">G</option>
+                    <option value="g#">G# / A♭</option>
+                    <option value="a">A</option>
+                    <option value="a#">A# / B♭</option>
+                    <option value="b">B</option>
+                  </select>
+
+                  <select value={this.props.scaleName} onChange={this.onChangeScale}>
+                    <option value="major">Major</option>
+                    <option value="minor">Minor</option>
+                    <option value="blues">Blues</option>
+                    <option value="phrygian">Phrygian</option>
+                  </select>
+
+                  <MatchingChords keyName={this.props.keyName}
+                                  scaleName={this.props.scaleName}
+                                  onSelectChord={this.props.onSelectChord} />
                 </div>
             );
-        } else {
-            return (
-                <div></div>
-            );
         }
-    }
-});
-
-const ScaleSelector = React.createClass({
-    onChangeKey: function(e) {
-        const newKey = e.target.options[e.target.selectedIndex].value;
-        this.props.onChangeKey(newKey);
-    },
-
-    onChangeScale: function(e) {
-        const newScale = e.target.options[e.target.selectedIndex].value;
-        this.props.onChangeScale(newScale);
-    },
-
-    render: function() {
-        return (
-            <div>
-              <select value={this.props.keyName} onChange={this.onChangeKey}>
-                <option value="">Choose a key</option>
-                <option value="c">C</option>
-                <option value="c#">C# / D♭</option>
-                <option value="d">D</option>
-                <option value="d#">D# / E♭</option>
-                <option value="e">E</option>
-                <option value="f">F</option>
-                <option value="f#">F# / G♭</option>
-                <option value="g">G</option>
-                <option value="g#">G# / A♭</option>
-                <option value="a">A</option>
-                <option value="a#">A# / B♭</option>
-                <option value="b">B</option>
-              </select>
-
-              <select value={this.props.scaleName} onChange={this.onChangeScale}>
-                <option value="major">Major</option>
-                <option value="minor">Minor</option>
-                <option value="blues">Blues</option>
-                <option value="phrygian">Phrygian</option>
-              </select>
-
-              <MatchingChords keyName={this.props.keyName}
-                              scaleName={this.props.scaleName}
-                              onSelectChord={this.props.onSelectChord} />
-            </div>
-        );
-    }
-});
-
-function isChordInScale(chord, scale) {
-    const scaleNoteChromas = scale.notes().map((n) => {
-        return n.chroma();
     });
 
-    return chord.notes().every((chordNote) => {
-        return scaleNoteChromas.indexOf(chordNote.chroma()) !== -1;
-    });
-}
+    function isChordInScale(chord, scale) {
+        const scaleNoteChromas = scale.notes().map((n) => {
+            return n.chroma();
+        });
 
-const MusicExplorerApp = React.createClass({
-    getInitialState: function() {
-        return {scale: initialScale, key: initialKey};
-    },
+        return chord.notes().every((chordNote) => {
+            return scaleNoteChromas.indexOf(chordNote.chroma()) !== -1;
+        });
+    }
 
-    onChangeScale: function(newScale) {
-        this.setState({scale: newScale});
-    },
+    const MusicExplorerApp = React.createClass({
+        getInitialState: function() {
+            return {scale: initialScale, key: initialKey};
+        },
 
-    onChangeKey: function(newKey) {
-        this.setState({key: newKey});
-    },
+        onChangeScale: function(newScale) {
+            this.setState({scale: newScale});
+        },
+
+        onChangeKey: function(newKey) {
+            this.setState({key: newKey});
+        },
 
     onSelectChord: function(chord) {
         for (let note of chord.simple()) {

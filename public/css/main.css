@@ -65,7 +65,7 @@ ol.piano {
     height: 175px;
     top: 0px;
     margin-left: -16px;
-    padding: 130px 0px 10px;
+    padding: 117px 0px 10px;
     /* Typography */
     text-align: center;
     font-size: 0.66667rem;
@@ -95,25 +95,47 @@ ol.piano {
     padding-top: 135px;
     color: white;
 }
-.piano li.in-scale .note-name, .piano li.ebony.in-scale .note-name {
+.piano li.in-scale .note-name {
     color: #33f;
 }
-.piano li.in-chord .note-name, .piano li.ebony.in-chord .note-name {
-    color: white;
-    background-color: blue;
-    border-radius: 50%;
+.piano li.in-chord .note {
     width: 20px;
     height: 20px;
     text-align: center;
     margin-left: -5px;
 }
-.piano li.ebony.in-chord .note-name {
+.piano li.in-chord .note-name {
+    color: white;
+    background-color: blue;
+    border-radius: 50%;
+}
+.piano li.ebony.in-chord .note {
     width: 25px;
     height: 25px;
     margin-left: -2px;
 }
-.piano li.in-chord.out-scale .note-name, .piano li.ebony.in-chord.out-scale .note-name {
+.piano li.in-chord.out-scale .note-name {
     background-color: red;
+}
+.piano li.in-chord .note-role {
+    color: brown;
+}
+.piano li.in-chord .note-role-root {
+    border-radius: 50%;
+    background-color: brown;
+    color: white;
+}
+.piano li.ebony.in-chord .note-role {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    color: #cd5555;
+    margin-left: -2px;
+}
+.piano li.ebony.in-chord .note-role-root {
+    border-radius: 50%;
+    background-color: #cd5555;
+    color: black;
 }
 
 ul.chords {
