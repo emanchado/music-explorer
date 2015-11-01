@@ -265,70 +265,79 @@ const MatchingChords = React.createClass({
             this.setState({key: newKey});
         },
 
-    onSelectChord: function(chord) {
-        for (let note of chord.simple()) {
-            playNote(1, note);
-        }
-        this.setState({highlightChord: chord,
-                       chordName: chord.name});
-    },
-
-    onChangeChordName: function(e) {
-        const newChordName = e.target.value;
-        this.setState({chordName: newChordName});
-    },
-
-    onClickHighlightChord: function(/*e*/) {
-        try {
-            const newChord = teoria.chord(this.state.chordName);
-            this.onSelectChord(newChord);
-        } catch (e) {
-            console.log("Ignoring unknown chord '" + this.state.chordName + "'");
-        }
-    },
-
-    render: function() {
-        let chord,
-            chordBoxCss = "chord-name";
-        try {
-            chord = teoria.chord(this.state.chordName);
-        } catch (e) {
-            // Only mark as wrong if the chordName isn't empty, as
-            // it's irritating that the cursor turns red on an empty
-            // textbox
-            if (this.state.chordName && this.state.chordName.length) {
-                chordBoxCss += " wrong";
+        onSelectChord: function(chord) {
+            if (chord) {
+                for (let note of chord.simple()) {
+                    playNote(1, note);
+                }
+                this.setState({highlightChord: chord,
+                               chordName: chord.name});
+            } else {
+                this.setState({highlightChord: null,
+                               chordName: ""});
             }
+        },
+
+        onChangeChordName: function(e) {
+            const newChordName = e.target.value;
+            this.setState({chordName: newChordName});
+        },
+
+        onClickHighlightChord: function(/*e*/) {
+            try {
+                const newChord = teoria.chord(this.state.chordName);
+                this.onSelectChord(newChord);
+            } catch (e) {
+                if (this.state.chordName) {
+                    console.log("Ignoring unknown chord '" + this.state.chordName + "'");
+                } else {
+                    this.onSelectChord(null);
+                }
+            }
+        },
+
+        render: function() {
+            let chord,
+                chordBoxCss = "chord-name";
+            try {
+                chord = teoria.chord(this.state.chordName);
+            } catch (e) {
+                // Only mark as wrong if the chordName isn't empty, as
+                // it's irritating that the cursor turns red on an empty
+                // textbox
+                if (this.state.chordName && this.state.chordName.length) {
+                    chordBoxCss += " wrong";
+                }
+            }
+
+            return (
+                <div>
+                  <Piano scale={this.state.scale}
+                         scalekey={this.state.key}
+                         highlightChord={this.state.highlightChord} />
+
+                  <ScaleSelector keyName={this.state.key}
+                                 scaleName={this.state.scale}
+                                 onChangeKey={this.onChangeKey}
+                                 onChangeScale={this.onChangeScale}
+                                 onSelectChord={this.onSelectChord} />
+
+                  Highlight chord:
+                  <div>
+                    <input type="text"
+                           size="7"
+                           className={chordBoxCss}
+                           value={this.state.chordName}
+                           onChange={this.onChangeChordName} />
+                    <button type="submit"
+                            onClick={this.onClickHighlightChord}>Highlight</button>
+                  </div>
+                </div>
+            );
         }
+    });
 
-        return (
-            <div>
-              <Piano scale={this.state.scale}
-                     scalekey={this.state.key}
-                     highlightChord={this.state.highlightChord} />
-
-              <ScaleSelector keyName={this.state.key}
-                             scaleName={this.state.scale}
-                             onChangeKey={this.onChangeKey}
-                             onChangeScale={this.onChangeScale}
-                             onSelectChord={this.onSelectChord} />
-
-              Highlight chord:
-              <div>
-                <input type="text"
-                       size="7"
-                       className={chordBoxCss}
-                       value={this.state.chordName}
-                       onChange={this.onChangeChordName} />
-                <button type="submit"
-                        onClick={this.onClickHighlightChord}>Highlight</button>
-              </div>
-            </div>
+        ReactDOM.render(
+            <MusicExplorerApp />,
+            document.getElementById('contents')
         );
-    }
-});
-
-ReactDOM.render(
-    <MusicExplorerApp />,
-    document.getElementById('contents')
-);
