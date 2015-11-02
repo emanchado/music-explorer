@@ -15,15 +15,6 @@ const noteNames = {
 
 const initialScale = 'major', initialKey = '';
 
-function noteLabel(note) {
-    if (noteNames.hasOwnProperty(note)) {
-        return noteNames[note];
-    } else {
-        return note.toUpperCase();
-    }
-}
-
-
 function playNote(octave, noteName) {
     let note = teoria.note(noteName),
         audioEl = document.getElementById("audioEl-" +
@@ -85,11 +76,19 @@ const PianoKey = React.createClass({
         }
     },
 
+    noteLabel: function(noteName) {
+        if (noteNames.hasOwnProperty(noteName)) {
+            return noteNames[noteName];
+        } else {
+            return noteName.toUpperCase();
+        }
+    },
+
     render: function() {
         const note = teoria.note(this.props.noteName),
               inScale = this.noteInScale(note, this.props.scale),
               roleInChord = this.noteRoleInChord(note, this.props.chord),
-              label = noteLabel(this.props.noteName),
+              label = this.noteLabel(this.props.noteName),
               audioUrl = this.noteAudioUrl(this.props.octave,
                                            this.props.noteName),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
