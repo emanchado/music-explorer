@@ -93,7 +93,7 @@ ol.piano {
     background: linear-gradient(#5f6265, #151b19 50%, #171c1a);
     border-bottom-width: 8px;
     padding-top: 135px;
-    color: white;
+    color: #ddd;
 }
 .piano li.in-scale .note-name {
     color: #33f;
@@ -105,8 +105,8 @@ ol.piano {
     margin-left: -5px;
 }
 .piano li.in-chord .note-name {
-    color: white;
-    background-color: blue;
+    color: #ddd;
+    background-color: #22b;
     border-radius: 50%;
 }
 .piano li.ebony.in-chord .note {
@@ -118,23 +118,23 @@ ol.piano {
     background-color: red;
 }
 .piano li.in-chord .note-role {
-    color: brown;
+    color: #333;
 }
 .piano li.in-chord .note-role-root {
     border-radius: 50%;
-    background-color: brown;
-    color: white;
+    background-color: #333;
+    color: #ddd;
 }
 .piano li.ebony.in-chord .note-role {
     display: inline-block;
     width: 13px;
     height: 13px;
-    color: #cd5555;
+    color: #ddd;
     margin-left: -2px;
 }
 .piano li.ebony.in-chord .note-role-root {
     border-radius: 50%;
-    background-color: #cd5555;
+    background-color: #ddd;
     color: black;
 }
 
