@@ -2,16 +2,19 @@
   "name": "music-explorer",
   "version": "0.0.1",
   "description": "A small web piano to learn and explore music theory",
+  "repository": "https://github.com/emanchado/music-explorer",
   "author": "Esteban Manchado Velázquez <emanchado@demiurgo.org>",
   "scripts": {
-    "compile": "browserify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js",
-    "watch": "watchify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js"
+    "compile": "browserify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js && node-sass public/css/main.scss public/css/main.css",
+    "watch": "watchify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js",
+    "watch-sass": "node-sass -w public/css/main.scss public/css/main.css"
   },
   "devDependencies": {
     "babel-plugin-react-transform": "^1.1.1",
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
-    "watchify": "^3.4.0"
+    "watchify": "^3.4.0",
+    "node-sass": "^3.4"
   },
   "license": "MIT",
   "dependencies": {
