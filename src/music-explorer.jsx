@@ -165,178 +165,178 @@ const MatchingChords = React.createClass({
             }));
 
             const matchingChords = potentialChords.filter(function(chord) {
-                    return isChordInScale(chord, scale);
-                });
+                return isChordInScale(chord, scale);
+            });
 
-                matchingChordMarkup = matchingChords.map((chord) => {
-                    return (
-                        <li key={chord.name}>
-                          <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
-                        </li>
-                    );
-                });
-            } else {
-                matchingChordMarkup = (
-                    <em>Select key/scale to show basic matching chords</em>
-                );
-            }
-
-            if (scale) {
+            matchingChordMarkup = matchingChords.map((chord) => {
                 return (
-                    <div>
-                      Matching chords for {this.props.keyName.toUpperCase()} {scale.name}:
-                      <ul className="chords">{matchingChordMarkup}</ul>
-                    </div>
+                    <li key={chord.name}>
+                      <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
+                    </li>
                 );
-            } else {
-                return (
-                    <div></div>
-                );
-            }
-        }
-    });
-
-    const ScaleSelector = React.createClass({
-        onChangeKey: function(e) {
-            const newKey = e.target.options[e.target.selectedIndex].value;
-            this.props.onChangeKey(newKey);
-        },
-
-        onChangeScale: function(e) {
-            const newScale = e.target.options[e.target.selectedIndex].value;
-            this.props.onChangeScale(newScale);
-        },
-
-        render: function() {
-            return (
-                <div>
-                  <select value={this.props.keyName} onChange={this.onChangeKey}>
-                    <option value="">Choose a key</option>
-                    <option value="c">C</option>
-                    <option value="c#">C# / D♭</option>
-                    <option value="d">D</option>
-                    <option value="d#">D# / E♭</option>
-                    <option value="e">E</option>
-                    <option value="f">F</option>
-                    <option value="f#">F# / G♭</option>
-                    <option value="g">G</option>
-                    <option value="g#">G# / A♭</option>
-                    <option value="a">A</option>
-                    <option value="a#">A# / B♭</option>
-                    <option value="b">B</option>
-                  </select>
-
-                  <select value={this.props.scaleName} onChange={this.onChangeScale}>
-                    <option value="major">Major</option>
-                    <option value="minor">Minor</option>
-                    <option value="blues">Blues</option>
-                    <option value="phrygian">Phrygian</option>
-                  </select>
-
-                  <MatchingChords keyName={this.props.keyName}
-                                  scaleName={this.props.scaleName}
-                                  onSelectChord={this.props.onSelectChord} />
-                </div>
+            });
+        } else {
+            matchingChordMarkup = (
+                <em>Select key/scale to show basic matching chords</em>
             );
         }
-    });
 
-    function isChordInScale(chord, scale) {
-        const scaleNoteChromas = scale.notes().map((n) => {
-            return n.chroma();
-        });
-
-        return chord.notes().every((chordNote) => {
-            return scaleNoteChromas.indexOf(chordNote.chroma()) !== -1;
-        });
+        if (scale) {
+            return (
+                <div>
+                  Matching chords for {this.props.keyName.toUpperCase()} {scale.name}:
+                  <ul className="chords">{matchingChordMarkup}</ul>
+                </div>
+            );
+        } else {
+            return (
+                <div></div>
+            );
+        }
     }
+});
 
-    const MusicExplorerApp = React.createClass({
-        getInitialState: function() {
-            return {scale: initialScale, key: initialKey};
-        },
+const ScaleSelector = React.createClass({
+    onChangeKey: function(e) {
+        const newKey = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeKey(newKey);
+    },
 
-        onChangeScale: function(newScale) {
-            this.setState({scale: newScale});
-        },
+    onChangeScale: function(e) {
+        const newScale = e.target.options[e.target.selectedIndex].value;
+        this.props.onChangeScale(newScale);
+    },
 
-        onChangeKey: function(newKey) {
-            this.setState({key: newKey});
-        },
+    render: function() {
+        return (
+            <div>
+              <select value={this.props.keyName} onChange={this.onChangeKey}>
+                <option value="">Choose a key</option>
+                <option value="c">C</option>
+                <option value="c#">C# / D♭</option>
+                <option value="d">D</option>
+                <option value="d#">D# / E♭</option>
+                <option value="e">E</option>
+                <option value="f">F</option>
+                <option value="f#">F# / G♭</option>
+                <option value="g">G</option>
+                <option value="g#">G# / A♭</option>
+                <option value="a">A</option>
+                <option value="a#">A# / B♭</option>
+                <option value="b">B</option>
+              </select>
 
-        onSelectChord: function(chord) {
-            if (chord) {
-                for (let note of chord.simple()) {
-                    playNote(1, note);
-                }
-                this.setState({highlightChord: chord,
-                               chordName: chord.name});
-            } else {
-                this.setState({highlightChord: null,
-                               chordName: ""});
-            }
-        },
+              <select value={this.props.scaleName} onChange={this.onChangeScale}>
+                <option value="major">Major</option>
+                <option value="minor">Minor</option>
+                <option value="blues">Blues</option>
+                <option value="phrygian">Phrygian</option>
+              </select>
 
-        onChangeChordName: function(e) {
-            const newChordName = e.target.value;
-            this.setState({chordName: newChordName});
-        },
+              <MatchingChords keyName={this.props.keyName}
+                              scaleName={this.props.scaleName}
+                              onSelectChord={this.props.onSelectChord} />
+            </div>
+        );
+    }
+});
 
-        onClickHighlightChord: function(/*e*/) {
-            try {
-                const newChord = teoria.chord(this.state.chordName);
-                this.onSelectChord(newChord);
-            } catch (e) {
-                if (this.state.chordName) {
-                    console.log("Ignoring unknown chord '" + this.state.chordName + "'");
-                } else {
-                    this.onSelectChord(null);
-                }
-            }
-        },
-
-        render: function() {
-            let chord,
-                chordBoxCss = "chord-name";
-            try {
-                chord = teoria.chord(this.state.chordName);
-            } catch (e) {
-                // Only mark as wrong if the chordName isn't empty, as
-                // it's irritating that the cursor turns red on an empty
-                // textbox
-                if (this.state.chordName && this.state.chordName.length) {
-                    chordBoxCss += " wrong";
-                }
-            }
-
-            return (
-                <div>
-                  <Piano scale={this.state.scale}
-                         scalekey={this.state.key}
-                         highlightChord={this.state.highlightChord} />
-
-                  <ScaleSelector keyName={this.state.key}
-                                 scaleName={this.state.scale}
-                                 onChangeKey={this.onChangeKey}
-                                 onChangeScale={this.onChangeScale}
-                                 onSelectChord={this.onSelectChord} />
-
-                  Highlight chord:
-                  <div>
-                    <input type="text"
-                           size="7"
-                           className={chordBoxCss}
-                           value={this.state.chordName}
-                           onChange={this.onChangeChordName} />
-                    <button type="submit"
-                            onClick={this.onClickHighlightChord}>Highlight</button>
-                  </div>
-                </div>
-            );
-        }
+function isChordInScale(chord, scale) {
+    const scaleNoteChromas = scale.notes().map((n) => {
+        return n.chroma();
     });
 
-        ReactDOM.render(
-            <MusicExplorerApp />,
-            document.getElementById('contents')
+    return chord.notes().every((chordNote) => {
+        return scaleNoteChromas.indexOf(chordNote.chroma()) !== -1;
+    });
+}
+
+const MusicExplorerApp = React.createClass({
+    getInitialState: function() {
+        return {scale: initialScale, key: initialKey};
+    },
+
+    onChangeScale: function(newScale) {
+        this.setState({scale: newScale});
+    },
+
+    onChangeKey: function(newKey) {
+        this.setState({key: newKey});
+    },
+
+    onSelectChord: function(chord) {
+        if (chord) {
+            for (let note of chord.simple()) {
+                playNote(1, note);
+            }
+            this.setState({highlightChord: chord,
+                           chordName: chord.name});
+        } else {
+            this.setState({highlightChord: null,
+                           chordName: ""});
+        }
+    },
+
+    onChangeChordName: function(e) {
+        const newChordName = e.target.value;
+        this.setState({chordName: newChordName});
+    },
+
+    onClickHighlightChord: function(/*e*/) {
+        try {
+            const newChord = teoria.chord(this.state.chordName);
+            this.onSelectChord(newChord);
+        } catch (e) {
+            if (this.state.chordName) {
+                console.log("Ignoring unknown chord '" + this.state.chordName + "'");
+            } else {
+                this.onSelectChord(null);
+            }
+        }
+    },
+
+    render: function() {
+        let chord,
+            chordBoxCss = "chord-name";
+        try {
+            chord = teoria.chord(this.state.chordName);
+        } catch (e) {
+            // Only mark as wrong if the chordName isn't empty, as
+            // it's irritating that the cursor turns red on an empty
+            // textbox
+            if (this.state.chordName && this.state.chordName.length) {
+                chordBoxCss += " wrong";
+            }
+        }
+
+        return (
+            <div>
+              <Piano scale={this.state.scale}
+                     scalekey={this.state.key}
+                     highlightChord={this.state.highlightChord} />
+
+              <ScaleSelector keyName={this.state.key}
+                             scaleName={this.state.scale}
+                             onChangeKey={this.onChangeKey}
+                             onChangeScale={this.onChangeScale}
+                             onSelectChord={this.onSelectChord} />
+
+              Highlight chord:
+              <div>
+                <input type="text"
+                       size="7"
+                       className={chordBoxCss}
+                       value={this.state.chordName}
+                       onChange={this.onChangeChordName} />
+                <button type="submit"
+                        onClick={this.onClickHighlightChord}>Highlight</button>
+              </div>
+            </div>
         );
+    }
+});
+
+ReactDOM.render(
+    <MusicExplorerApp />,
+    document.getElementById('contents')
+);
