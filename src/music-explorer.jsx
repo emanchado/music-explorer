@@ -184,7 +184,7 @@ const MatchingChords = React.createClass({
             if (scale) {
                 return (
                     <div>
-                      Matching chords for {scale.name}:
+                      Matching chords for {this.props.keyName.toUpperCase()} {scale.name}:
                       <ul className="chords">{matchingChordMarkup}</ul>
                     </div>
                 );
