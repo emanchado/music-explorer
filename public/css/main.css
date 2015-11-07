@@ -118,6 +118,14 @@ ol.piano {
   ol.piano li.in-chord.out-scale .note-name {
     background-color: red; }
 
+.toolbox .scale-tools {
+  width: 48%;
+  float: left; }
+
+.toolbox .chord-tools {
+  float: left;
+  width: 48%; }
+
 ul.chords {
   margin: 0;
   padding: 0; }

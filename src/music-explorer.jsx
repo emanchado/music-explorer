@@ -232,10 +232,6 @@ const ScaleSelector = React.createClass({
                 <option value="blues">Blues</option>
                 <option value="phrygian">Phrygian</option>
               </select>
-
-              <MatchingChords keyName={this.props.keyName}
-                              scaleName={this.props.scaleName}
-                              onSelectChord={this.props.onSelectChord} />
             </div>
         );
     }
@@ -315,21 +311,32 @@ const MusicExplorerApp = React.createClass({
                      scalekey={this.state.key}
                      highlightChord={this.state.highlightChord} />
 
-              <ScaleSelector keyName={this.state.key}
-                             scaleName={this.state.scale}
-                             onChangeKey={this.onChangeKey}
-                             onChangeScale={this.onChangeScale}
-                             onSelectChord={this.onSelectChord} />
+              <div className="toolbox">
+                <div className="scale-tools">
+                  <h2>Scales</h2>
+                  <ScaleSelector keyName={this.state.key}
+                                 scaleName={this.state.scale}
+                                 onChangeKey={this.onChangeKey}
+                                 onChangeScale={this.onChangeScale} />
+                </div>
 
-              Highlight chord:
-              <div>
-                <input type="text"
-                       size="7"
-                       className={chordBoxCss}
-                       value={this.state.chordName}
-                       onChange={this.onChangeChordName} />
-                <button type="submit"
-                        onClick={this.onClickHighlightChord}>Highlight</button>
+                <div className="chord-tools">
+                  <h2>Chords</h2>
+                  <MatchingChords keyName={this.state.key}
+                                  scaleName={this.state.scale}
+                                  onSelectChord={this.onSelectChord} />
+
+                  Highlight chord:
+                  <div>
+                    <input type="text"
+                           size="7"
+                           className={chordBoxCss}
+                           value={this.state.chordName}
+                           onChange={this.onChangeChordName} />
+                    <button type="submit"
+                            onClick={this.onClickHighlightChord}>Highlight</button>
+                  </div>
+                </div>
               </div>
             </div>
         );
