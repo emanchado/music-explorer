@@ -1,37 +1,32 @@
 body {
-    background-color: #dcdcdc;
-    font-family: Ubuntu, sans-serif;
-}
+  background-color: #dcdcdc;
+  font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 #contents {
-    margin: 30px auto;
-    text-align: center;
-    width: 75%;
-    overflow: hidden;
-}
+  margin: 30px auto;
+  text-align: center;
+  width: 75%;
+  overflow: hidden; }
 
 .piano audio {
-    display: none;
-}
+  display: none; }
 
 ol.piano {
-    position: relative;
-    padding: 0;
-    margin: 0 0 10px;
-    display: inline-block;
-    font-size: 0;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-.piano li {
+  position: relative;
+  padding: 0;
+  margin: 0 0 10px;
+  display: inline-block;
+  font-size: 0;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none; }
+  ol.piano li {
     box-sizing: border-box;
     width: 40px;
     height: 300px;
     font-size: 16px;
     font-size: 1rem;
-    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MwYzFiZCIvPjxzdG9wIG9mZnNldD0iMTAlIiBzdG9wLWNvbG9yPSIjZjBmMGYwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmFmMGU2Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MwYzFiZCIvPjxzdG9wIG9mZnNldD0iMTAlIiBzdG9wLWNvbG9yPSIjZjBmMGYwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmFmMGU2Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
     background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
     background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
@@ -47,17 +42,14 @@ ol.piano {
     position: relative;
     z-index: 1;
     cursor: pointer;
-    color: #ddc;
-}
-.piano li:hover {
-    color: #C0C1BD;
-}
-.piano li:active {
+    color: #ddc; }
+  ol.piano li:hover {
+    color: #C0C1BD; }
+  ol.piano li:active {
     box-shadow: none;
     top: 5px;
-    color: #333;
-}
-.piano li.ebony {
+    color: #333; }
+  ol.piano li.ebony {
     /* build the key shape */
     z-index: 2;
     position: absolute;
@@ -75,86 +67,77 @@ ol.piano {
     border-color: #000;
     border-bottom-color: #424546;
     background: #171C1A;
-    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iMjUlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iMjUlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(25%, #151b19), color-stop(100%, #171c1a));
     background: -moz-linear-gradient(#5f6265, #151b19 25%, #171c1a);
     background: -webkit-linear-gradient(#5f6265, #151b19 25%, #171c1a);
     background: linear-gradient(#5f6265, #151b19 25%, #171c1a);
-    box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
-}
-.piano li.ebony:hover {
-    color: gainsboro;
-}
-.piano li.ebony:active {
-    background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+    box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2); }
+  ol.piano li.ebony:hover {
+    color: gainsboro; }
+  ol.piano li.ebony:active {
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(50%, #151b19), color-stop(100%, #171c1a));
     background: -moz-linear-gradient(#5f6265, #151b19 50%, #171c1a);
     background: -webkit-linear-gradient(#5f6265, #151b19 50%, #171c1a);
     background: linear-gradient(#5f6265, #151b19 50%, #171c1a);
     border-bottom-width: 8px;
     padding-top: 135px;
-    color: #ddd;
-}
-.piano li.in-scale .note-name {
-    color: #33f;
-}
-.piano li.in-chord .note {
+    color: #eee; }
+  ol.piano li.in-scale .note-name {
+    color: #33f; }
+  ol.piano li.in-chord .note {
     width: 20px;
     height: 20px;
     text-align: center;
-    margin-left: -5px;
-}
-.piano li.in-chord .note-name {
-    color: #ddd;
+    margin-left: -5px; }
+  ol.piano li.in-chord .note-name {
+    color: #eee;
     background-color: #22b;
-    border-radius: 50%;
-}
-.piano li.ebony.in-chord .note {
-    width: 25px;
-    height: 25px;
-    margin-left: -2px;
-}
-.piano li.in-chord.out-scale .note-name {
-    background-color: red;
-}
-.piano li.in-chord .note-role {
-    color: #333;
-}
-.piano li.in-chord .note-role-root {
+    border-radius: 50%; }
+  ol.piano li.in-chord .note-role {
+    color: #333; }
+  ol.piano li.in-chord .note-role-root {
     border-radius: 50%;
     background-color: #333;
-    color: #ddd;
-}
-.piano li.ebony.in-chord .note-role {
+    color: #eee; }
+  ol.piano li.ebony.in-chord .note {
+    width: 25px;
+    height: 25px;
+    margin-left: -2px; }
+  ol.piano li.ebony.in-chord .note-role {
     display: inline-block;
     width: 13px;
     height: 13px;
-    color: #ddd;
-    margin-left: -2px;
-}
-.piano li.ebony.in-chord .note-role-root {
+    color: #eee;
+    margin-left: -2px; }
+  ol.piano li.ebony.in-chord .note-role-root {
     border-radius: 50%;
-    background-color: #ddd;
-    color: black;
-}
+    background-color: #eee;
+    color: black; }
+  ol.piano li.in-chord.out-scale .note-name {
+    background-color: red; }
+
+.toolbox .scale-tools {
+  width: 48%;
+  float: left; }
+
+.toolbox .chord-tools {
+  float: left;
+  width: 48%; }
 
 ul.chords {
-    margin: 0;
-    padding: 0;
-}
-ul.chords li {
-    display: inline;
-}
-ul.chords li:after {
-    content: ", "
-}
-ul.chords li:last-child:after {
-    content: ""
-}
+  margin: 0;
+  padding: 0; }
+  ul.chords li {
+    display: inline; }
+  ul.chords li:after {
+    content: ", "; }
+  ul.chords li:last-child:after {
+    content: ""; }
 
 .chord-name {
-    font-size: 200%;
-}
+  font-size: 200%; }
+
 .chord-name.wrong {
-    color: red;
-}
+  color: red; }
