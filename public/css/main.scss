@@ -4,6 +4,24 @@ $note-active-color: #333;
 $note-ebony-color: #555;
 $note-ebony-active-color: #eee;
 $note-ebony-hover-color: gainsboro;
+$key-active-background-color1: #c0c1bd;
+$key-active-background-color2: #f0f0f0;
+$key-active-background-color3: #faf0e6;
+$key-ebony-active-background-color1: #5f6265;
+$key-ebony-active-background-color2: #151b19;
+$key-ebony-active-background-color3: #171c1a;
+$key-inactive-background-color1: #c0c1bd;
+$key-inactive-background-color2: #f0f0f0;
+$key-inactive-background-color3: #e6e4e1;
+$key-ebony-inactive-background-color1: #5f6265;
+$key-ebony-inactive-background-color2: #151b19;
+$key-ebony-inactive-background-color3: #6b6d6b;
+$key-wrong-background-color1: #c0b1ad;
+$key-wrong-background-color2: #f0e0e0;
+$key-wrong-background-color3: #fad0c6;
+$key-ebony-wrong-background-color1: #7f5255;
+$key-ebony-wrong-background-color2: #350b09;
+$key-ebony-wrong-background-color3: #570c0a;
 $scale-highlight-color: #33f;
 $scale-out-background-color: red;
 $chord-highlight-color: #eee;
@@ -14,6 +32,14 @@ $chord-highlight-root-background-color: #333;
 $chord-highlight-ebony-note-role-color: #eee;
 $chord-highlight-ebony-root-color: black;
 $chord-highlight-ebony-root-background-color: #eee;
+
+@mixin key-background($color1, $color2, $color3) {
+    background: $color3;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, $color1), color-stop(10%, $color2), color-stop(100%, $color3));
+    background: -moz-linear-gradient(top, $color1, $color2 10%, $color3);
+    background: -webkit-linear-gradient(top, $color1, $color2 10%, $color3);
+    background: linear-gradient(to bottom, $color1, $color2 10%, $color3);
+}
 
 body {
     background-color: #dcdcdc;
@@ -47,11 +73,11 @@ ol.piano {
         height: 300px;
         font-size: 16px;
         font-size: 1rem;
-        background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MwYzFiZCIvPjxzdG9wIG9mZnNldD0iMTAlIiBzdG9wLWNvbG9yPSIjZjBmMGYwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmFmMGU2Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
-        background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
-        background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
-        background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #faf0e6);
+
+        @include key-background($key-inactive-background-color1,
+                                $key-inactive-background-color2,
+                                $key-inactive-background-color3);
+
         transition: all 0.1s ease-in-out;
         padding: 0;
         margin: 0;
@@ -59,7 +85,6 @@ ol.piano {
         border: 1px solid #ccc;
         padding: 220px 15px 50px;
         border-radius: 0 0 5px 5px;
-        box-shadow: 0 5px 5px #aaa;
         position: relative;
         z-index: 1;
         cursor: pointer;
@@ -88,35 +113,55 @@ ol.piano {
         color: $note-ebony-color;
         border-radius: 0 0 2px 2px;
         border-width: 0 6px 12px;
-        border-color: #000;
-        border-bottom-color: #424546;
-        background: #171C1A;
-        background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iMjUlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(25%, #151b19), color-stop(100%, #171c1a));
-        background: -moz-linear-gradient(#5f6265, #151b19 25%, #171c1a);
-        background: -webkit-linear-gradient(#5f6265, #151b19 25%, #171c1a);
-        background: linear-gradient(#5f6265, #151b19 25%, #171c1a);
-        box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
+        border-color: #5e5d5c;
+        border-bottom-color: #898988;
+
+        @include key-background($key-ebony-inactive-background-color1,
+                                $key-ebony-inactive-background-color2,
+                                $key-ebony-inactive-background-color3);
     }
     li.ebony:hover {
         color: $note-ebony-hover-color;
     }
     li.ebony:active {
-        background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
-        background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(50%, #151b19), color-stop(100%, #171c1a));
-        background: -moz-linear-gradient(#5f6265, #151b19 50%, #171c1a);
-        background: -webkit-linear-gradient(#5f6265, #151b19 50%, #171c1a);
-        background: linear-gradient(#5f6265, #151b19 50%, #171c1a);
+        @include key-background($key-ebony-active-background-color1,
+                                $key-ebony-active-background-color2,
+                                $key-ebony-active-background-color3);
+        border-color: #000;
+        border-bottom-color: #424546;
+
         border-bottom-width: 8px;
         padding-top: 135px;
         color: $note-ebony-active-color;
     }
 
-    li.in-scale .note-name {
-        color: $scale-highlight-color;
+    li.in-scale {
+        @include key-background($key-active-background-color1,
+                                $key-active-background-color2,
+                                $key-active-background-color3);
+        box-shadow: 0 5px 5px #aaa;
+
+        .note-name {
+            color: $scale-highlight-color;
+        }
+    }
+
+    li.ebony.in-scale {
+        @include key-background($key-ebony-active-background-color1,
+                                $key-ebony-active-background-color2,
+                                $key-ebony-active-background-color3);
+        box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
+
+        border-color: #000;
+        border-bottom-color: #424546;
     }
 
     li.in-chord {
+        @include key-background($key-active-background-color1,
+                                $key-active-background-color2,
+                                $key-active-background-color3);
+        box-shadow: 0 5px 5px #aaa;
+
         .note {
             width: 20px;
             height: 20px;
@@ -140,6 +185,14 @@ ol.piano {
         }
     }
     li.ebony.in-chord {
+        @include key-background($key-ebony-active-background-color1,
+                                $key-ebony-active-background-color2,
+                                $key-ebony-active-background-color3);
+        box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
+
+        border-color: #000;
+        border-bottom-color: #424546;
+
         .note {
             width: 25px;
             height: 25px;
@@ -160,8 +213,20 @@ ol.piano {
         }
     }
 
-    li.in-chord.out-scale .note-name {
-        background-color: $scale-out-background-color;
+    li.in-chord.out-scale {
+        @include key-background($key-wrong-background-color1,
+                                $key-wrong-background-color2,
+                                $key-wrong-background-color3);
+
+        .note-name {
+            background-color: $scale-out-background-color;
+        }
+    }
+
+    li.ebony.in-chord.out-scale {
+        @include key-background($key-ebony-wrong-background-color1,
+                                $key-ebony-wrong-background-color2,
+                                $key-ebony-wrong-background-color3);
     }
 }
 
