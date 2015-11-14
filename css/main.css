@@ -26,11 +26,11 @@ ol.piano {
     height: 300px;
     font-size: 16px;
     font-size: 1rem;
-    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2MwYzFiZCIvPjxzdG9wIG9mZnNldD0iMTAlIiBzdG9wLWNvbG9yPSIjZjBmMGYwIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZmFmMGU2Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
-    background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
-    background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
-    background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    background: #e6e4e1;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #e6e4e1));
+    background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #e6e4e1);
+    background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #e6e4e1);
+    background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #e6e4e1);
     transition: all 0.1s ease-in-out;
     padding: 0;
     margin: 0;
@@ -38,7 +38,6 @@ ol.piano {
     border: 1px solid #ccc;
     padding: 220px 15px 50px;
     border-radius: 0 0 5px 5px;
-    box-shadow: 0 5px 5px #aaa;
     position: relative;
     z-index: 1;
     cursor: pointer;
@@ -64,59 +63,103 @@ ol.piano {
     color: #555;
     border-radius: 0 0 2px 2px;
     border-width: 0 6px 12px;
-    border-color: #000;
-    border-bottom-color: #424546;
-    background: #171C1A;
-    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iMjUlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(25%, #151b19), color-stop(100%, #171c1a));
-    background: -moz-linear-gradient(#5f6265, #151b19 25%, #171c1a);
-    background: -webkit-linear-gradient(#5f6265, #151b19 25%, #171c1a);
-    background: linear-gradient(#5f6265, #151b19 25%, #171c1a);
-    box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2); }
+    border-color: #5e5d5c;
+    border-bottom-color: #898988;
+    background: #6b6d6b;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #6b6d6b));
+    background: -moz-linear-gradient(top, #5f6265, #151b19 10%, #6b6d6b);
+    background: -webkit-linear-gradient(top, #5f6265, #151b19 10%, #6b6d6b);
+    background: linear-gradient(to bottom, #5f6265, #151b19 10%, #6b6d6b); }
   ol.piano li.ebony:hover {
     color: gainsboro; }
   ol.piano li.ebony:active {
-    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVmNjI2NSIvPjxzdG9wIG9mZnNldD0iNTAlIiBzdG9wLWNvbG9yPSIjMTUxYjE5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTcxYzFhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g");
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(50%, #151b19), color-stop(100%, #171c1a));
-    background: -moz-linear-gradient(#5f6265, #151b19 50%, #171c1a);
-    background: -webkit-linear-gradient(#5f6265, #151b19 50%, #171c1a);
-    background: linear-gradient(#5f6265, #151b19 50%, #171c1a);
+    background: #171c1a;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #171c1a));
+    background: -moz-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: -webkit-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: linear-gradient(to bottom, #5f6265, #151b19 10%, #171c1a);
+    border-color: #000;
+    border-bottom-color: #424546;
     border-bottom-width: 8px;
     padding-top: 135px;
     color: #eee; }
-  ol.piano li.in-scale .note-name {
-    color: #33f; }
-  ol.piano li.in-chord .note {
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    margin-left: -5px; }
-  ol.piano li.in-chord .note-name {
-    color: #eee;
-    background-color: #22b;
-    border-radius: 50%; }
-  ol.piano li.in-chord .note-role {
-    color: #333; }
-  ol.piano li.in-chord .note-role-root {
-    border-radius: 50%;
-    background-color: #333;
-    color: #eee; }
-  ol.piano li.ebony.in-chord .note {
-    width: 25px;
-    height: 25px;
-    margin-left: -2px; }
-  ol.piano li.ebony.in-chord .note-role {
-    display: inline-block;
-    width: 13px;
-    height: 13px;
-    color: #eee;
-    margin-left: -2px; }
-  ol.piano li.ebony.in-chord .note-role-root {
-    border-radius: 50%;
-    background-color: #eee;
-    color: black; }
-  ol.piano li.in-chord.out-scale .note-name {
-    background-color: red; }
+  ol.piano li.in-scale {
+    background: #faf0e6;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
+    background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    box-shadow: 0 5px 5px #aaa; }
+    ol.piano li.in-scale .note-name {
+      color: #33f; }
+  ol.piano li.ebony.in-scale {
+    background: #171c1a;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #171c1a));
+    background: -moz-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: -webkit-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: linear-gradient(to bottom, #5f6265, #151b19 10%, #171c1a);
+    box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
+    border-color: #000;
+    border-bottom-color: #424546; }
+  ol.piano li.in-chord {
+    background: #faf0e6;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
+    background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #faf0e6);
+    box-shadow: 0 5px 5px #aaa; }
+    ol.piano li.in-chord .note {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      margin-left: -5px; }
+    ol.piano li.in-chord .note-name {
+      color: #eee;
+      background-color: #22b;
+      border-radius: 50%; }
+    ol.piano li.in-chord .note-role {
+      color: #333; }
+    ol.piano li.in-chord .note-role-root {
+      border-radius: 50%;
+      background-color: #333;
+      color: #eee; }
+  ol.piano li.ebony.in-chord {
+    background: #171c1a;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #171c1a));
+    background: -moz-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: -webkit-linear-gradient(top, #5f6265, #151b19 10%, #171c1a);
+    background: linear-gradient(to bottom, #5f6265, #151b19 10%, #171c1a);
+    box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
+    border-color: #000;
+    border-bottom-color: #424546; }
+    ol.piano li.ebony.in-chord .note {
+      width: 25px;
+      height: 25px;
+      margin-left: -2px; }
+    ol.piano li.ebony.in-chord .note-role {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      color: #eee;
+      margin-left: -2px; }
+    ol.piano li.ebony.in-chord .note-role-root {
+      border-radius: 50%;
+      background-color: #eee;
+      color: black; }
+  ol.piano li.in-chord.out-scale {
+    background: #fad0c6;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0b1ad), color-stop(10%, #f0e0e0), color-stop(100%, #fad0c6));
+    background: -moz-linear-gradient(top, #c0b1ad, #f0e0e0 10%, #fad0c6);
+    background: -webkit-linear-gradient(top, #c0b1ad, #f0e0e0 10%, #fad0c6);
+    background: linear-gradient(to bottom, #c0b1ad, #f0e0e0 10%, #fad0c6); }
+    ol.piano li.in-chord.out-scale .note-name {
+      background-color: red; }
+  ol.piano li.ebony.in-chord.out-scale {
+    background: #570c0a;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #7f5255), color-stop(10%, #350b09), color-stop(100%, #570c0a));
+    background: -moz-linear-gradient(top, #7f5255, #350b09 10%, #570c0a);
+    background: -webkit-linear-gradient(top, #7f5255, #350b09 10%, #570c0a);
+    background: linear-gradient(to bottom, #7f5255, #350b09 10%, #570c0a); }
 
 .toolbox .scale-tools {
   width: 48%;
