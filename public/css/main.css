@@ -65,11 +65,11 @@ ol.piano {
     border-width: 0 6px 12px;
     border-color: #5e5d5c;
     border-bottom-color: #898988;
-    background: #6b6d6b;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #6b6d6b));
-    background: -moz-linear-gradient(top, #5f6265, #151b19 10%, #6b6d6b);
-    background: -webkit-linear-gradient(top, #5f6265, #151b19 10%, #6b6d6b);
-    background: linear-gradient(to bottom, #5f6265, #151b19 10%, #6b6d6b); }
+    background: #676c6a;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #454b49), color-stop(100%, #676c6a));
+    background: -moz-linear-gradient(top, #5f6265, #454b49 10%, #676c6a);
+    background: -webkit-linear-gradient(top, #5f6265, #454b49 10%, #676c6a);
+    background: linear-gradient(to bottom, #5f6265, #454b49 10%, #676c6a); }
   ol.piano li.ebony:hover {
     color: gainsboro; }
   ol.piano li.ebony:active {
