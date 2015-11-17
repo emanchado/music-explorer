@@ -7,14 +7,17 @@
   "scripts": {
     "compile": "browserify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js && node-sass public/css/main.scss public/css/main.css",
     "watch": "watchify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js",
-    "watch-sass": "node-sass -w public/css/main.scss public/css/main.css"
+    "watch-sass": "node-sass -w public/css/main.scss public/css/main.css",
+    "test": "ava"
   },
   "devDependencies": {
+    "ava": "^0.4.2",
+    "babel-cli": "^6.1.18",
     "babel-plugin-react-transform": "^1.1.1",
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
-    "watchify": "^3.4.0",
-    "node-sass": "^3.4"
+    "node-sass": "^3.4",
+    "watchify": "^3.4.0"
   },
   "license": "MIT",
   "dependencies": {
