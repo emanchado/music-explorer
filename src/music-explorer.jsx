@@ -1,7 +1,8 @@
-const React = require('react'),
-      ReactDOM = require('react-dom'),
+const React = require("react"),
+      ReactDOM = require("react-dom"),
       R = require("ramda"),
-      teoria = require("teoria");
+      teoria = require("teoria"),
+      RUList = require("../lib/RUList");
 
 const NUMBER_OCTAVES = 2;
 
@@ -13,7 +14,7 @@ const noteNames = {
     "a#": "A# B♭"
 };
 
-const initialScale = 'major', initialKey = '';
+const initialScale = "major", initialKey = "";
 
 function playNote(octave, noteName) {
     let note = teoria.note(noteName),
@@ -63,7 +64,7 @@ const PianoKey = React.createClass({
             return (
                 <div className="note-role">&nbsp;</div>
             );
-        } else if (roleInChord.toString() === 'P1') {
+        } else if (roleInChord.toString() === "P1") {
             // Want to show as "R" (for "root"), not as P1. Also, mark
             // with a CSS class because it's kind of special
             return (
@@ -93,12 +94,12 @@ const PianoKey = React.createClass({
                                            this.props.noteName),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
 
-        const scaleInclusionClassName = inScale ? 'in-scale' : 'out-scale',
+        const scaleInclusionClassName = inScale ? "in-scale" : "out-scale",
               scaleHighlightClassName = this.props.scale ?
-                                        scaleInclusionClassName : '',
-              chordHighlightClassName = roleInChord ? 'in-chord' : '',
-              className = (note.accidental().length ? 'ebony' : '') + ' ' +
-                          scaleHighlightClassName + ' ' +
+                                        scaleInclusionClassName : "",
+              chordHighlightClassName = roleInChord ? "in-chord" : "",
+              className = (note.accidental().length ? "ebony" : "") + " " +
+                          scaleHighlightClassName + " " +
                           chordHighlightClassName;
 
         return (
@@ -121,7 +122,7 @@ const Piano = React.createClass({
         const scaleKeyName = this.props.scalekey,
               scaleName = this.props.scale,
               currentScale = (scaleKeyName && scaleName) ?
-                             teoria.note(scaleKeyName + '4').scale(scaleName) :
+                             teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
                   return octaveNotes.map((note) => {
@@ -153,13 +154,13 @@ const MatchingChords = React.createClass({
 
     render: function() {
         const scale = (this.props.keyName && this.props.scaleName) ?
-                      teoria.note(this.props.keyName + '4').scale(this.props.scaleName) :
+                      teoria.note(this.props.keyName + "4").scale(this.props.scaleName) :
                       null;
         let matchingChordMarkup;
 
         if (scale) {
             const potentialChords = R.flatten(scale.notes().map((note) => {
-                return ['', 'm', 'dim', 'aug'].map((chordType) => {
+                return ["", "m", "dim", "aug"].map((chordType) => {
                     return note.chord(chordType);
                 });
             }));
@@ -171,7 +172,7 @@ const MatchingChords = React.createClass({
             matchingChordMarkup = matchingChords.map((chord) => {
                 return (
                     <li key={chord.name}>
-                      <a href="#" onClick={this.chordSelectionHandler(chord)}>{chord.name}</a>
+                      <Chord onClick={this.chordSelectionHandler(chord)} chord={chord} />
                     </li>
                 );
             });
@@ -193,6 +194,14 @@ const MatchingChords = React.createClass({
                 <div></div>
             );
         }
+    }
+});
+
+const Chord = React.createClass({
+    render: function() {
+        return (
+            <a href="#" onClick={this.props.onClick}>{this.props.chord.name}</a>
+        );
     }
 });
 
@@ -249,7 +258,9 @@ function isChordInScale(chord, scale) {
 
 const MusicExplorerApp = React.createClass({
     getInitialState: function() {
-        return {scale: initialScale, key: initialKey};
+        return {scale: initialScale,
+                key: initialKey,
+                lastUsedChords: new RUList()};
     },
 
     onChangeScale: function(newScale) {
@@ -282,6 +293,8 @@ const MusicExplorerApp = React.createClass({
         try {
             const newChord = teoria.chord(this.state.chordName);
             this.onSelectChord(newChord);
+
+            this.state.lastUsedChords.add(newChord.name);
         } catch (e) {
             if (this.state.chordName) {
                 console.log("Ignoring unknown chord '" + this.state.chordName + "'");
@@ -304,6 +317,18 @@ const MusicExplorerApp = React.createClass({
                 chordBoxCss += " wrong";
             }
         }
+
+        let lastChords = this.state.lastUsedChords.toArray(),
+            lastChordsMarkup = lastChords.map(chordName => {
+                const chord = teoria.chord(chordName),
+                      clickHandler = (/*ev*/) => {
+                          this.onSelectChord(chord);
+                      };
+
+                return (
+                    <li><Chord key={chordName} onClick={clickHandler} chord={chord} /></li>
+                );
+            });
 
         return (
             <div>
@@ -336,6 +361,9 @@ const MusicExplorerApp = React.createClass({
                     <button type="submit"
                             onClick={this.onClickHighlightChord}>Highlight</button>
                   </div>
+
+                  Last used chords:
+                  <ul className="chords">{lastChordsMarkup}</ul>
                 </div>
               </div>
             </div>
@@ -345,5 +373,5 @@ const MusicExplorerApp = React.createClass({
 
 ReactDOM.render(
     <MusicExplorerApp />,
-    document.getElementById('contents')
+    document.getElementById("contents")
 );
