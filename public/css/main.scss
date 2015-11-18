@@ -46,11 +46,17 @@ body {
     font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-h3 {
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1em;
+    color: #555;
     margin-bottom: 0.3ex;
 }
 
-#contents {
+#app {
     margin: 30px auto;
     text-align: center;
     width: 75%;

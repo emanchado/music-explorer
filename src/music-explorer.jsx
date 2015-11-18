@@ -185,7 +185,7 @@ const MatchingChords = React.createClass({
         if (scale) {
             return (
                 <div>
-                  <h3>Matching chords for {this.props.keyName.toUpperCase()} {scale.name}</h3>
+                  <h2>Matching chords for {this.props.keyName.toUpperCase()} {scale.name}</h2>
                   <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
             );
@@ -350,7 +350,7 @@ const MusicExplorerApp = React.createClass({
 
               <div className="toolbox">
                 <div className="scale-tools">
-                  <h2>Scales</h2>
+                  <h1>Scales</h1>
                   <ScaleSelector keyName={this.state.key}
                                  scaleName={this.state.scale}
                                  onChangeKey={this.onChangeKey}
@@ -358,12 +358,12 @@ const MusicExplorerApp = React.createClass({
                 </div>
 
                 <div className="chord-tools">
-                  <h2>Chords</h2>
+                  <h1>Chords</h1>
                   <MatchingChords keyName={this.state.key}
                                   scaleName={this.state.scale}
                                   onSelectChord={this.onSelectChord} />
 
-                  <h3>Highlight chord</h3>
+                  <h2>Highlight chord</h2>
                   <input type="text"
                          size="7"
                          className={chordBoxCss}
@@ -372,7 +372,7 @@ const MusicExplorerApp = React.createClass({
                   <button type="submit"
                           onClick={this.onClickHighlightChord}>Highlight</button>
 
-                  <h3>Last used chords</h3>
+                  <h2>Last used chords</h2>
                   <ul className="chords">{lastChordsMarkup}</ul>
                 </div>
               </div>
@@ -383,5 +383,5 @@ const MusicExplorerApp = React.createClass({
 
 ReactDOM.render(
     <MusicExplorerApp />,
-    document.getElementById("contents")
+    document.getElementById("app")
 );
