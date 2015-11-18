@@ -185,7 +185,7 @@ const MatchingChords = React.createClass({
         if (scale) {
             return (
                 <div>
-                  Matching chords for {this.props.keyName.toUpperCase()} {scale.name}:
+                  <h3>Matching chords for {this.props.keyName.toUpperCase()} {scale.name}</h3>
                   <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
             );
@@ -319,7 +319,10 @@ const MusicExplorerApp = React.createClass({
         }
 
         let lastChords = this.state.lastUsedChords.toArray(),
-            lastChordsMarkup = lastChords.map(chordName => {
+            lastChordsMarkup;
+
+        if (lastChords.length) {
+            let lastChordsItems = lastChords.map(chordName => {
                 const chord = teoria.chord(chordName),
                       clickHandler = (/*ev*/) => {
                           this.onSelectChord(chord);
@@ -329,6 +332,15 @@ const MusicExplorerApp = React.createClass({
                     <li><Chord key={chordName} onClick={clickHandler} chord={chord} /></li>
                 );
             });
+
+            lastChordsMarkup = (
+                <ul className="chords">{lastChordsItems}</ul>
+            );
+        } else {
+            lastChordsMarkup = (
+                <em>None</em>
+            );
+        }
 
         return (
             <div>
@@ -351,18 +363,16 @@ const MusicExplorerApp = React.createClass({
                                   scaleName={this.state.scale}
                                   onSelectChord={this.onSelectChord} />
 
-                  Highlight chord:
-                  <div>
-                    <input type="text"
-                           size="7"
-                           className={chordBoxCss}
-                           value={this.state.chordName}
-                           onChange={this.onChangeChordName} />
-                    <button type="submit"
-                            onClick={this.onClickHighlightChord}>Highlight</button>
-                  </div>
+                  <h3>Highlight chord</h3>
+                  <input type="text"
+                         size="7"
+                         className={chordBoxCss}
+                         value={this.state.chordName}
+                         onChange={this.onChangeChordName} />
+                  <button type="submit"
+                          onClick={this.onClickHighlightChord}>Highlight</button>
 
-                  Last used chords:
+                  <h3>Last used chords</h3>
                   <ul className="chords">{lastChordsMarkup}</ul>
                 </div>
               </div>
