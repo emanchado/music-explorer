@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>About Music Explorer</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen" />
+  </head>
+
+  <body>
+    <nav>
+      <div id="about"><a href="about/">About</a></div>
+      <div id="page-title"><a href="/">Music Explorer</a></div>
+    </nav>
+
+    <div id="page-text">
+      <h1>What is this?</h1>
+      <p>Music Explorer is a simple application to explore and learn
+      music theory. It's designed to see how notes, chords and scales fit
+      together, more than as a piano to be played.</p>
+
+      <h1>How do I use it?</h1>
+      <p>On startup, all keys are dimmed. You can select a scale on
+      the left, or type a chord name on the right, and the
+      corresponding keys will be highlighted.</p>
+
+      <p>When you choose a scale, you will see the basic chords that
+      fit in that scale. Clicking on their names will play them and
+      mark the different notes that comprise them. These notes will
+      have a mark stating the role of the note in the chord: "R" for
+      "root", "M3" for "major third", "P5" for "perfect fifth" and so
+      on. If you have a scale selected and you play a chord that
+      doesn't fit, the offending chord notes will be highlighted in
+      red.</p>
+
+      <p>If you know the chords to a song, you can try typing the
+      chord names, and then guessing the song melody by playing the
+      notes in each chord.</p>
+
+      <h1>Technical details</h1>
+      <p>Music Explorer is written in JavaScript
+      (<a href="http://es6-features.org/">ES6</a> to be more precise)
+      and <a href="https://facebook.github.io/react/">React</a>, and
+      uses the
+      fantastic <a href="https://github.com/saebekassebil/teoria">teoria</a>
+      JavaScript music
+      library, <a href="http://browserify.org/">Browserify</a> and
+      other code and tools. I got the piano markup and CSS
+      from <a href="http://codepen.io/garypaul/pen/jgKqc">this codepen
+      by Gary Paul</a>, and the piano note samples I got
+      from <a href="http://www.vibrationdata.com/piano.htm">Vibrationdata.com</a>.</p>
+
+      <p>You have
+      the <a href="https://github.com/emanchado/music-explorer">full
+      source code</a> on GitHub. The code is licensed under the MIT
+      license, read below for full conditions.</p>
+
+      <h1>License</h1>
+      <p>Copyright (c) 2015 Esteban Manchado Velázquez
+      &lt;emanchado@demiurgo.org&gt;</p>
+
+      <p>Permission is hereby granted, free of charge, to any person
+      obtaining a copy of this software and associated documentation
+      files (the "Software"), to deal in the Software without
+      restriction, including without limitation the rights to use,
+      copy, modify, merge, publish, distribute, sublicense, and/or
+      sell copies of the Software, and to permit persons to whom the
+      Software is furnished to do so, subject to the following
+      conditions:</p>
+
+      <p>The above copyright notice and this permission notice shall
+      be included in all copies or substantial portions of the
+      Software.</p>
+
+      <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+      KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+      WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+      AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+      HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+      WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+      FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+      OTHER DEALINGS IN THE SOFTWARE.</p>
+    </div>
+
+    <footer>
+      <a href="https://github.com/emanchado/music-explorer">Source code</a> on GitHub
+    </footer>
+
+    <!-- Original mp3 files from http://www.vibrationdata.com/piano.htm -->
+    <script type="text/javascript" src="js/bundle.js"></script>
+  </body>
+</html>

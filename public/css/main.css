@@ -1,6 +1,18 @@
 body {
   background-color: #dcdcdc;
+  margin: 0;
   font-family: Ubuntu, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+nav {
+  display: block;
+  margin: 0;
+  padding: 1ex 1em;
+  background-color: #333;
+  color: #ddd; }
+
+nav a {
+  color: #ddd;
+  text-decoration: none; }
 
 h1 {
   font-size: 1.5em; }
@@ -10,11 +22,35 @@ h2 {
   color: #555;
   margin-bottom: 0.3ex; }
 
+footer {
+  clear: both;
+  padding-top: 4ex;
+  text-align: center;
+  font-size: 70%;
+  font-style: italic; }
+
+#page-title {
+  font-size: 1.8em;
+  line-height: 1.8em;
+  height: 50px;
+  font-weight: bold; }
+
+#about {
+  float: right;
+  font-size: 1.5em;
+  line-height: 1.8em;
+  height: 50px; }
+
 #app {
   margin: 30px auto;
   text-align: center;
-  width: 75%;
-  overflow: hidden; }
+  width: 75%; }
+
+#page-text {
+  width: 50em;
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto; }
 
 .piano audio {
   display: none; }
