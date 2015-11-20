@@ -9,7 +9,7 @@ easily play them and experiment with them.
 
 If you want to see it in action, go to:
 
-   http://emanchado.github.io/music-explorer
+   http://music-explorer.org
 
 Motivation
 ----------
