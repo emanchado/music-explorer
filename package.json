@@ -5,7 +5,7 @@
   "repository": "https://github.com/emanchado/music-explorer",
   "author": "Esteban Manchado Velázquez <emanchado@demiurgo.org>",
   "scripts": {
-    "compile": "browserify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js && node-sass public/css/main.scss public/css/main.css",
+    "compile": "browserify -vd -t babelify -t uglifyify src/music-explorer.jsx | uglifyjs --compress --mangle -- >public/js/bundle.js && node-sass public/css/main.scss public/css/main.css",
     "watch": "watchify -vd -t babelify src/music-explorer.jsx -o public/js/bundle.js",
     "watch-sass": "node-sass -w public/css/main.scss public/css/main.css",
     "test": "ava"
@@ -17,6 +17,8 @@
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
     "node-sass": "^3.4",
+    "uglifyify": "^3.0.1",
+    "uglifyjs": "^2.4.10",
     "watchify": "^3.4.0"
   },
   "license": "MIT",
