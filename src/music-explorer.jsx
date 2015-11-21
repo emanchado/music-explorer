@@ -185,7 +185,7 @@ const MatchingChords = React.createClass({
         if (scale) {
             return (
                 <div>
-                  <h2>Matching chords for {this.props.keyName.toUpperCase()} {scale.name}</h2>
+                  <h2>Matching chords for {this.props.keyName.toUpperCase()} {scale.label}</h2>
                   <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
             );
@@ -217,6 +217,12 @@ const ScaleSelector = React.createClass({
     },
 
     render: function() {
+        const scaleOptions = teoria.Scale.KNOWN_SCALES.map((scale) => {
+            return (
+                <option key={scale.name} value={scale.name}>{scale.label}</option>
+            );
+        });
+
         return (
             <div>
               <select value={this.props.keyName} onChange={this.onChangeKey}>
@@ -236,10 +242,7 @@ const ScaleSelector = React.createClass({
               </select>
 
               <select value={this.props.scaleName} onChange={this.onChangeScale}>
-                <option value="major">Major</option>
-                <option value="minor">Minor</option>
-                <option value="blues">Blues</option>
-                <option value="phrygian">Phrygian</option>
+                {scaleOptions}
               </select>
             </div>
         );
