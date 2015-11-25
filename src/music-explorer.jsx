@@ -7,11 +7,11 @@ const React = require("react"),
 const NUMBER_OCTAVES = 2;
 
 const noteNames = {
-    "c#": "C# D♭",
-    "d#": "D# E♭",
-    "f#": "F# G♭",
-    "g#": "G# A♭",
-    "a#": "A# B♭"
+    "c#": "C♯ D♭",
+    "d#": "D♯ E♭",
+    "f#": "F♯ G♭",
+    "g#": "G♯ A♭",
+    "a#": "A♯ B♭"
 };
 
 const initialScale = "major", initialKey = "";
