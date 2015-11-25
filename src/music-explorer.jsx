@@ -40,9 +40,18 @@ const PianoKey = React.createClass({
     },
 
     noteInScale: function (note, scale) {
-        return scale && scale.notes().some(function(scaleNote) {
-            return scaleNote.chroma() === note.chroma();
-        });
+        if (scale) {
+            const scaleNotes = scale.notes();
+            for (let i = 0, len = scaleNotes.length; i < len; i++) {
+                if (scaleNotes[i].chroma() === note.chroma()) {
+                    const scaleNote = scaleNotes[i];
+                    return scaleNote.name().toUpperCase() +
+                           scaleNote.accidental();
+                }
+            }
+        }
+
+        return null;
     },
 
     noteRoleInChord: function (note, chord) {
@@ -87,14 +96,14 @@ const PianoKey = React.createClass({
 
     render: function() {
         const note = teoria.note(this.props.noteName),
-              inScale = this.noteInScale(note, this.props.scale),
+              noteInScale = this.noteInScale(note, this.props.scale),
               roleInChord = this.noteRoleInChord(note, this.props.chord),
-              label = this.noteLabel(this.props.noteName),
+              label = noteInScale || this.noteLabel(this.props.noteName),
               audioUrl = this.noteAudioUrl(this.props.octave,
                                            this.props.noteName),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
 
-        const scaleInclusionClassName = inScale ? "in-scale" : "out-scale",
+        const scaleInclusionClassName = noteInScale ? "in-scale" : "out-scale",
               scaleHighlightClassName = this.props.scale ?
                                         scaleInclusionClassName : "",
               chordHighlightClassName = roleInChord ? "in-chord" : "",
