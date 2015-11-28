@@ -196,7 +196,7 @@ const MatchingChords = React.createClass({
         if (scale) {
             return (
                 <div>
-                  <h2>Matching chords for {this.props.keyName.toUpperCase()} {scale.label}</h2>
+                  <h2>Matching triad chords for <em>{this.props.keyName.toUpperCase()} {scale.label}</em></h2>
                   <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
             );
@@ -371,14 +371,14 @@ const MusicExplorerApp = React.createClass({
                                  scaleName={this.state.scale}
                                  onChangeKey={this.onChangeKey}
                                  onChangeScale={this.onChangeScale} />
+
+                  <MatchingChords keyName={this.state.key}
+                                  scaleName={this.state.scale}
+                                  onSelectChord={this.onSelectChord} />
                 </div>
 
                 <div className="chord-tools">
                   <h1>Chords</h1>
-                  <MatchingChords keyName={this.state.key}
-                                  scaleName={this.state.scale}
-                                  onSelectChord={this.onSelectChord} />
-
                   <h2>Highlight chord</h2>
                   <input type="text"
                          size="7"
