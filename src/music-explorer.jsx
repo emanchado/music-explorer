@@ -6,12 +6,13 @@ const React = require("react"),
 
 const NUMBER_OCTAVES = 2;
 
-const noteNames = {
+const properNoteLabels = {
     "c#": "C♯",
     "d#": "D♯",
     "f#": "F♯",
     "g#": "G♯",
     "a#": "A♯",
+    "cb": "C♭",
     "db": "D♭",
     "eb": "E♭",
     "gb": "G♭",
@@ -49,9 +50,7 @@ const PianoKey = React.createClass({
             const scaleNotes = scale.notes();
             for (let i = 0, len = scaleNotes.length; i < len; i++) {
                 if (scaleNotes[i].chroma() === note.chroma()) {
-                    const scaleNote = scaleNotes[i];
-                    return scaleNote.name().toUpperCase() +
-                           scaleNote.accidental();
+                    return scaleNotes[i];
                 }
             }
         }
@@ -59,26 +58,28 @@ const PianoKey = React.createClass({
         return null;
     },
 
-    noteRoleInChord: function (note, chord) {
-        let role = null;
-
+    noteInChord: function (note, chord) {
         if (chord) {
-            chord.notes().forEach(function(chordNote) {
-                if (chordNote.chroma() === note.chroma()) {
-                    role = chord.root.interval(chordNote);
+            const chordNotes = chord.notes();
+            for (let i = 0, len = chordNotes.length; i < len; i++) {
+                if (chordNotes[i].chroma() === note.chroma()) {
+                    return chordNotes[i];
                 }
-            });
+            }
         }
 
-        return role;
+        return null;
     },
 
-    roleInChordDiv: function(roleInChord) {
-        if (!roleInChord) {
+    roleInChordDiv: function(chord, noteInChord) {
+        if (!noteInChord) {
             return (
                 <div className="note-role">&nbsp;</div>
             );
-        } else if (roleInChord.toString() === "P1") {
+        }
+
+        const roleInChord = chord.root.interval(noteInChord);
+        if (roleInChord.toString() === "P1") {
             // Want to show as "R" (for "root"), not as P1. Also, mark
             // with a CSS class because it's kind of special
             return (
@@ -91,19 +92,23 @@ const PianoKey = React.createClass({
         }
     },
 
-    noteLabel: function(noteName) {
-        if (noteNames.hasOwnProperty(noteName)) {
-            return noteNames[noteName];
+    noteLabel: function(note, defaultNoteName) {
+        const rawNoteName = note ? note.name() + note.accidental() :
+                            defaultNoteName;
+
+        if (properNoteLabels.hasOwnProperty(rawNoteName)) {
+            return properNoteLabels[rawNoteName];
         } else {
-            return noteName.toUpperCase();
+            return rawNoteName.toUpperCase();
         }
     },
 
     render: function() {
         const note = teoria.note(this.props.noteName),
               noteInScale = this.noteInScale(note, this.props.scale),
-              roleInChord = this.noteRoleInChord(note, this.props.chord),
-              label = noteInScale || this.noteLabel(this.props.noteName),
+              noteInChord = this.noteInChord(note, this.props.chord),
+              label = this.noteLabel(noteInChord || noteInScale,
+                                     this.props.noteName),
               audioUrl = this.noteAudioUrl(this.props.octave,
                                            this.props.noteName),
               audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
@@ -111,15 +116,17 @@ const PianoKey = React.createClass({
         const scaleInclusionClassName = noteInScale ? "in-scale" : "out-scale",
               scaleHighlightClassName = this.props.scale ?
                                         scaleInclusionClassName : "",
-              chordHighlightClassName = roleInChord ? "in-chord" : "",
+              chordHighlightClassName = noteInChord ? "in-chord" : "",
               className = (note.accidental().length ? "ebony" : "") + " " +
                           scaleHighlightClassName + " " +
                           chordHighlightClassName;
 
         return (
-            <li className={className} onClick={this.handleClick}>
+            <li key={this.props.noteName}
+                className={className}
+                onClick={this.handleClick}>
               <div className="note">
-                {this.roleInChordDiv(roleInChord)}
+                {this.roleInChordDiv(this.props.chord, noteInChord)}
                 <div className="note-name">{label}</div>
               </div>
               <audio id={audioElId} preload="auto" src={audioUrl} />
@@ -346,7 +353,9 @@ const MusicExplorerApp = React.createClass({
                       };
 
                 return (
-                    <li><Chord key={chordName} onClick={clickHandler} chord={chord} /></li>
+                    <li key={chordName}>
+                      <Chord onClick={clickHandler} chord={chord} />
+                    </li>
                 );
             });
 

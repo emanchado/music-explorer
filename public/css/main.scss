@@ -239,6 +239,8 @@ ol.piano {
 
         .note-role {
             color: $chord-highlight-note-role-color;
+            width: 20px;
+            height: 20px;
         }
         .note-role-root {
             border-radius: 50%;

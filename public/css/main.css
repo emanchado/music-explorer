@@ -165,7 +165,9 @@ ol.piano {
       background-color: #22b;
       border-radius: 50%; }
     ol.piano li.in-chord .note-role {
-      color: #333; }
+      color: #333;
+      width: 20px;
+      height: 20px; }
     ol.piano li.in-chord .note-role-root {
       border-radius: 50%;
       background-color: #333;
