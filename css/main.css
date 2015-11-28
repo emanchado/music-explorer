@@ -60,7 +60,6 @@ ol.piano {
   padding: 0;
   margin: 0 0 10px;
   display: inline-block;
-  font-size: 0;
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none; }
@@ -68,8 +67,7 @@ ol.piano {
     box-sizing: border-box;
     width: 40px;
     height: 300px;
-    font-size: 16px;
-    font-size: 1rem;
+    font-size: 14px;
     background: #e6e4e1;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #e6e4e1));
     background: -moz-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #e6e4e1);
@@ -86,6 +84,14 @@ ol.piano {
     z-index: 1;
     cursor: pointer;
     color: #ddc; }
+    ol.piano li .note {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      text-align: center; }
+      ol.piano li .note .note-name {
+        width: 20px;
+        height: 20px; }
   ol.piano li:hover {
     color: #C0C1BD; }
   ol.piano li:active {
@@ -100,10 +106,9 @@ ol.piano {
     height: 175px;
     top: 0px;
     margin-left: -16px;
-    padding: 117px 0px 10px;
+    padding: 0 0px 10px;
     /* Typography */
     text-align: center;
-    font-size: 0.66667rem;
     color: #555;
     border-radius: 0 0 2px 2px;
     border-width: 0 6px 12px;
@@ -114,6 +119,9 @@ ol.piano {
     background: -moz-linear-gradient(top, #5f6265, #454b49 10%, #676c6a);
     background: -webkit-linear-gradient(top, #5f6265, #454b49 10%, #676c6a);
     background: linear-gradient(to bottom, #5f6265, #454b49 10%, #676c6a); }
+    ol.piano li.ebony .note {
+      bottom: 15px;
+      left: 0; }
   ol.piano li.ebony:hover {
     color: gainsboro; }
   ol.piano li.ebony:active {
@@ -152,17 +160,14 @@ ol.piano {
     background: -webkit-linear-gradient(top, #c0c1bd, #f0f0f0 10%, #faf0e6);
     background: linear-gradient(to bottom, #c0c1bd, #f0f0f0 10%, #faf0e6);
     box-shadow: 0 5px 5px #aaa; }
-    ol.piano li.in-chord .note {
-      width: 20px;
-      height: 20px;
-      text-align: center;
-      margin-left: -5px; }
     ol.piano li.in-chord .note-name {
       color: #eee;
       background-color: #22b;
       border-radius: 50%; }
     ol.piano li.in-chord .note-role {
-      color: #333; }
+      color: #333;
+      width: 20px;
+      height: 20px; }
     ol.piano li.in-chord .note-role-root {
       border-radius: 50%;
       background-color: #333;
@@ -176,16 +181,10 @@ ol.piano {
     box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
     border-color: #000;
     border-bottom-color: #424546; }
-    ol.piano li.ebony.in-chord .note {
-      width: 25px;
-      height: 25px;
-      margin-left: -2px; }
     ol.piano li.ebony.in-chord .note-role {
-      display: inline-block;
-      width: 13px;
-      height: 13px;
-      color: #eee;
-      margin-left: -2px; }
+      width: 20px;
+      height: 20px;
+      color: #eee; }
     ol.piano li.ebony.in-chord .note-role-root {
       border-radius: 50%;
       background-color: #eee;
