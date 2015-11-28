@@ -6,18 +6,12 @@ const React = require("react"),
 
 const NUMBER_OCTAVES = 2;
 
-const properNoteLabels = {
-    "c#": "C♯",
-    "d#": "D♯",
-    "f#": "F♯",
-    "g#": "G♯",
-    "a#": "A♯",
-    "cb": "C♭",
-    "db": "D♭",
-    "eb": "E♭",
-    "gb": "G♭",
-    "ab": "A♭",
-    "bb": "B♭"
+const accidentalLabels = {
+    "#": "♯",
+    "b": "♭",
+    "x": "𝄪",
+    "bb": "𝄫",
+    "": ""
 };
 
 const initialScale = "major", initialKey = "";
@@ -93,14 +87,10 @@ const PianoKey = React.createClass({
     },
 
     noteLabel: function(note, defaultNoteName) {
-        const rawNoteName = note ? note.name() + note.accidental() :
+        const rawNoteName = note ? note.name() + accidentalLabels[note.accidental()] :
                             defaultNoteName;
 
-        if (properNoteLabels.hasOwnProperty(rawNoteName)) {
-            return properNoteLabels[rawNoteName];
-        } else {
-            return rawNoteName.toUpperCase();
-        }
+        return rawNoteName.toUpperCase();
     },
 
     render: function() {
