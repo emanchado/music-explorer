@@ -114,7 +114,6 @@ ol.piano {
     padding: 0;
     margin: 0 0 10px;
     display: inline-block;
-    font-size: 0;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -123,8 +122,7 @@ ol.piano {
         box-sizing: border-box;
         width: 40px;
         height: 300px;
-        font-size: 16px;
-        font-size: 1rem;
+        font-size: 14px;
 
         @include key-background($key-inactive-background-color1,
                                 $key-inactive-background-color2,
@@ -141,6 +139,18 @@ ol.piano {
         z-index: 1;
         cursor: pointer;
         color: $note-color;
+
+        .note {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            text-align: center;
+
+            .note-name {
+                width: 20px;
+                height: 20px;
+            }
+        }
     }
     li:hover {
         color: $note-hover-color;
@@ -158,10 +168,9 @@ ol.piano {
         height: 175px;
         top: 0px;
         margin-left: -16px;
-        padding: 117px 0px 10px;
+        padding: 0 0px 10px;
         /* Typography */
         text-align: center;
-        font-size: 0.66667rem;
         color: $note-ebony-color;
         border-radius: 0 0 2px 2px;
         border-width: 0 6px 12px;
@@ -171,6 +180,11 @@ ol.piano {
         @include key-background($key-ebony-inactive-background-color1,
                                 $key-ebony-inactive-background-color2,
                                 $key-ebony-inactive-background-color3);
+
+        .note {
+            bottom: 15px;
+            left: 0;
+        }
     }
     li.ebony:hover {
         color: $note-ebony-hover-color;
@@ -215,10 +229,6 @@ ol.piano {
         box-shadow: 0 5px 5px #aaa;
 
         .note {
-            width: 20px;
-            height: 20px;
-            text-align: center;
-            margin-left: -5px;
         }
 
         .note-name {
@@ -245,18 +255,10 @@ ol.piano {
         border-color: #000;
         border-bottom-color: #424546;
 
-        .note {
-            width: 25px;
-            height: 25px;
-            margin-left: -2px;
-        }
-
         .note-role {
-            display: inline-block;
-            width: 13px;
-            height: 13px;
+            width: 20px;
+            height: 20px;
             color: $chord-highlight-ebony-note-role-color;
-            margin-left: -2px;
         }
         .note-role-root {
             border-radius: 50%;

@@ -7,11 +7,16 @@ const React = require("react"),
 const NUMBER_OCTAVES = 2;
 
 const noteNames = {
-    "c#": "C♯ D♭",
-    "d#": "D♯ E♭",
-    "f#": "F♯ G♭",
-    "g#": "G♯ A♭",
-    "a#": "A♯ B♭"
+    "c#": "C♯",
+    "d#": "D♯",
+    "f#": "F♯",
+    "g#": "G♯",
+    "a#": "A♯",
+    "db": "D♭",
+    "eb": "E♭",
+    "gb": "G♭",
+    "ab": "A♭",
+    "bb": "B♭"
 };
 
 const initialScale = "major", initialKey = "";
@@ -55,7 +60,7 @@ const PianoKey = React.createClass({
     },
 
     noteRoleInChord: function (note, chord) {
-        var role = null;
+        let role = null;
 
         if (chord) {
             chord.notes().forEach(function(chordNote) {
@@ -134,12 +139,12 @@ const Piano = React.createClass({
                              teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
-                  return octaveNotes.map((note) => {
-                      let reactKey = (octaveNumber + 1) + "-" + note;
+                  return octaveNotes.map((noteName) => {
+                      let reactKey = (octaveNumber + 1) + "-" + noteName;
                       return (
                           <PianoKey octave={octaveNumber+1}
                                     key={reactKey}
-                                    noteName={note}
+                                    noteName={noteName}
                                     scale={currentScale}
                                     chord={this.props.highlightChord} />
                       );
