@@ -6,7 +6,7 @@ const React = require("react"),
 
 const NUMBER_OCTAVES = 2;
 
-const accidentalLabels = {
+const ACCIDENTAL_LABELS = {
     "#": "♯",
     "b": "♭",
     "x": "𝄪",
@@ -14,31 +14,12 @@ const accidentalLabels = {
     "": ""
 };
 
-const initialScale = "major", initialKey = "";
+const OCTAVE_NOTES = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
+                      "a", "a#", "b"];
 
-function playNote(octave, noteName) {
-    let note = teoria.note(noteName),
-        audioEl = document.getElementById("audioEl-" +
-                                          octave +
-                                          "-" +
-                                          note.chroma());
-    if (audioEl.paused) {
-        audioEl.play();
-    } else {
-        audioEl.currentTime = 0;
-    }
-}
+const INITIAL_SCALE = "major", INITIAL_KEY = "";
 
 const PianoKey = React.createClass({
-    noteAudioUrl: function (octaveNumber, noteName) {
-        const note = teoria.note(noteName);
-        return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
-    },
-
-    handleClick: function() {
-        playNote(this.props.octave, this.props.noteName);
-    },
-
     noteInScale: function (note, scale) {
         if (scale) {
             const scaleNotes = scale.notes();
@@ -87,7 +68,7 @@ const PianoKey = React.createClass({
     },
 
     noteLabel: function(note, defaultNoteName) {
-        const rawNoteName = note ? note.name() + accidentalLabels[note.accidental()] :
+        const rawNoteName = note ? note.name() + ACCIDENTAL_LABELS[note.accidental()] :
                             defaultNoteName;
 
         return rawNoteName.toUpperCase();
@@ -98,10 +79,7 @@ const PianoKey = React.createClass({
               noteInScale = this.noteInScale(note, this.props.scale),
               noteInChord = this.noteInChord(note, this.props.chord),
               label = this.noteLabel(noteInChord || noteInScale,
-                                     this.props.noteName),
-              audioUrl = this.noteAudioUrl(this.props.octave,
-                                           this.props.noteName),
-              audioElId = "audioEl-" + this.props.octave + "-" + note.chroma();
+                                     this.props.noteName);
 
         const scaleInclusionClassName = noteInScale ? "in-scale" : "out-scale",
               scaleHighlightClassName = this.props.scale ?
@@ -114,19 +92,15 @@ const PianoKey = React.createClass({
         return (
             <li key={this.props.noteName}
                 className={className}
-                onClick={this.handleClick}>
+                onClick={this.props.handleClick}>
               <div className="note">
                 {this.roleInChordDiv(this.props.chord, noteInChord)}
                 <div className="note-name">{label}</div>
               </div>
-              <audio id={audioElId} preload="auto" src={audioUrl} />
             </li>
         );
     }
 });
-
-const octaveNotes = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
-                     "a", "a#", "b"];
 
 const Piano = React.createClass({
     render: function() {
@@ -136,14 +110,18 @@ const Piano = React.createClass({
                              teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
               keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
-                  return octaveNotes.map((noteName) => {
-                      let reactKey = (octaveNumber + 1) + "-" + noteName;
+                  return OCTAVE_NOTES.map((noteName) => {
+                      let reactKey = (octaveNumber + 1) + "-" + noteName,
+                          playNoteHandler = () => {
+                              this.props.playNote(octaveNumber + 1, noteName);
+                          };
                       return (
                           <PianoKey octave={octaveNumber+1}
                                     key={reactKey}
                                     noteName={noteName}
                                     scale={currentScale}
-                                    chord={this.props.highlightChord} />
+                                    chord={this.props.highlightChord}
+                                    handleClick={playNoteHandler} />
                       );
                   });
               }));
@@ -239,16 +217,16 @@ const ScaleSelector = React.createClass({
               <select value={this.props.keyName} onChange={this.onChangeKey}>
                 <option value="">Choose a key</option>
                 <option value="c">C</option>
-                <option value="c#">C# / D♭</option>
+                <option value="c#">C♯ (D♭)</option>
                 <option value="d">D</option>
-                <option value="d#">D# / E♭</option>
+                <option value="d#">D♯ (E♭)</option>
                 <option value="e">E</option>
                 <option value="f">F</option>
-                <option value="f#">F# / G♭</option>
+                <option value="f#">F♯ (G♭)</option>
                 <option value="g">G</option>
-                <option value="g#">G# / A♭</option>
+                <option value="g#">G♯ (A♭)</option>
                 <option value="a">A</option>
-                <option value="a#">A# / B♭</option>
+                <option value="a#">A♯ (B♭)</option>
                 <option value="b">B</option>
               </select>
 
@@ -272,8 +250,8 @@ function isChordInScale(chord, scale) {
 
 const MusicExplorerApp = React.createClass({
     getInitialState: function() {
-        return {scale: initialScale,
-                key: initialKey,
+        return {scale: INITIAL_SCALE,
+                key: INITIAL_KEY,
                 lastUsedChords: new RUList()};
     },
 
@@ -288,7 +266,7 @@ const MusicExplorerApp = React.createClass({
     onSelectChord: function(chord) {
         if (chord) {
             for (let note of chord.simple()) {
-                playNote(1, note);
+                this.playNote(1, note);
             }
             this.setState({highlightChord: chord,
                            chordName: chord.name});
@@ -318,7 +296,46 @@ const MusicExplorerApp = React.createClass({
         }
     },
 
+    noteAudioUrl: function (octaveNumber, noteName) {
+        const note = teoria.note(noteName);
+        return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
+    },
+
+    audioElId: function(octaveNumber, chroma) {
+        return "audioEl-" + octaveNumber + "-" + chroma;
+    },
+
+    audioElements: function(numberOctaves) {
+        return R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
+            return R.range(0, OCTAVE_NOTES.length).map((chroma) => {
+                const audioUrl = this.noteAudioUrl(octaveNumber + 1,
+                                                   OCTAVE_NOTES[chroma]),
+                      audioElId = this.audioElId(octaveNumber + 1, chroma);
+                return (
+                    <audio ref={audioElId}
+                           key={audioElId}
+                           preload="auto"
+                           src={audioUrl} />
+                );
+            });
+        }));
+    },
+
+    playNote: function(octave, noteName) {
+        let note = teoria.note(noteName),
+            audioElId = this.audioElId(octave, note.chroma()),
+            audioEl = ReactDOM.findDOMNode(this.refs[audioElId]);
+
+        if (audioEl.paused) {
+            audioEl.play();
+        } else {
+            audioEl.currentTime = 0;
+        }
+    },
+
     render: function() {
+        const audioElements = this.audioElements();
+
         let chord,
             chordBoxCss = "chord-name";
         try {
@@ -362,7 +379,10 @@ const MusicExplorerApp = React.createClass({
             <div>
               <Piano scale={this.state.scale}
                      scalekey={this.state.key}
-                     highlightChord={this.state.highlightChord} />
+                     highlightChord={this.state.highlightChord}
+                     playNote={this.playNote} />
+
+              {audioElements}
 
               <div className="toolbox">
                 <div className="scale-tools">
