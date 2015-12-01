@@ -68,8 +68,10 @@ const PianoKey = React.createClass({
     },
 
     noteLabel: function(note, defaultNoteName) {
-        const rawNoteName = note ? note.name() + ACCIDENTAL_LABELS[note.accidental()] :
-                            defaultNoteName;
+        const rawNoteName = note ?
+                            note.name() + ACCIDENTAL_LABELS[note.accidental()] :
+                            defaultNoteName.replace(/#$/, ACCIDENTAL_LABELS["#"]).
+                                            replace(/b$/, ACCIDENTAL_LABELS["b"]);
 
         return rawNoteName.toUpperCase();
     },
@@ -187,9 +189,17 @@ const MatchingChords = React.createClass({
 });
 
 const Chord = React.createClass({
+    chordLabel: function(chord) {
+        return R.reduce(function(acc, symbol) {
+            return acc.replace(symbol, ACCIDENTAL_LABELS[symbol]);
+        }, chord.name, ["bb", "x", "b", "#"]);
+    },
+
     render: function() {
+        const chordLabel = this.chordLabel(this.props.chord);
+
         return (
-            <a href="#" onClick={this.props.onClick}>{this.props.chord.name}</a>
+            <a href="#" onClick={this.props.onClick}>{chordLabel}</a>
         );
     }
 });
