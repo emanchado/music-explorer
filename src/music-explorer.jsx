@@ -2,9 +2,8 @@ const React = require("react"),
       ReactDOM = require("react-dom"),
       R = require("ramda"),
       teoria = require("teoria"),
-      RUList = require("../lib/RUList");
-
-const NUMBER_OCTAVES = 2;
+      RUList = require("../lib/RUList"),
+      notePlayer = require("../lib/note-player");
 
 const ACCIDENTAL_LABELS = {
     "#": "♯",
@@ -13,9 +12,6 @@ const ACCIDENTAL_LABELS = {
     "bb": "𝄫",
     "": ""
 };
-
-const OCTAVE_NOTES = ["c", "c#", "d", "d#", "e", "f", "f#", "g", "g#",
-                      "a", "a#", "b"];
 
 const INITIAL_SCALE = "major", INITIAL_KEY = "";
 
@@ -111,11 +107,11 @@ const Piano = React.createClass({
               currentScale = (scaleKeyName && scaleName) ?
                              teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
-              keys = R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
-                  return OCTAVE_NOTES.map((noteName) => {
+              keys = R.flatten(R.range(0, this.props.notePlayer.NUMBER_OCTAVES).map((octaveNumber) => {
+                  return this.props.notePlayer.OCTAVE_NOTES.map((noteName) => {
                       let reactKey = (octaveNumber + 1) + "-" + noteName,
                           playNoteHandler = () => {
-                              this.props.playNote(octaveNumber + 1, noteName);
+                              this.props.notePlayer.playNote(octaveNumber + 1, noteName);
                           };
                       return (
                           <PianoKey octave={octaveNumber+1}
@@ -276,7 +272,7 @@ const MusicExplorerApp = React.createClass({
     onSelectChord: function(chord) {
         if (chord) {
             for (let note of chord.simple()) {
-                this.playNote(1, note);
+                this.props.notePlayer.playNote(1, note);
             }
             this.setState({highlightChord: chord,
                            chordName: chord.name});
@@ -306,46 +302,7 @@ const MusicExplorerApp = React.createClass({
         }
     },
 
-    noteAudioUrl: function (octaveNumber, noteName) {
-        const note = teoria.note(noteName);
-        return "notes/" + octaveNumber + "-" + note.chroma() + ".mp3";
-    },
-
-    audioElId: function(octaveNumber, chroma) {
-        return "audioEl-" + octaveNumber + "-" + chroma;
-    },
-
-    audioElements: function(numberOctaves) {
-        return R.flatten(R.range(0, NUMBER_OCTAVES).map((octaveNumber) => {
-            return R.range(0, OCTAVE_NOTES.length).map((chroma) => {
-                const audioUrl = this.noteAudioUrl(octaveNumber + 1,
-                                                   OCTAVE_NOTES[chroma]),
-                      audioElId = this.audioElId(octaveNumber + 1, chroma);
-                return (
-                    <audio ref={audioElId}
-                           key={audioElId}
-                           preload="auto"
-                           src={audioUrl} />
-                );
-            });
-        }));
-    },
-
-    playNote: function(octave, noteName) {
-        let note = teoria.note(noteName),
-            audioElId = this.audioElId(octave, note.chroma()),
-            audioEl = ReactDOM.findDOMNode(this.refs[audioElId]);
-
-        if (audioEl.paused) {
-            audioEl.play();
-        } else {
-            audioEl.currentTime = 0;
-        }
-    },
-
     render: function() {
-        const audioElements = this.audioElements();
-
         let chord,
             chordBoxCss = "chord-name";
         try {
@@ -390,9 +347,7 @@ const MusicExplorerApp = React.createClass({
               <Piano scale={this.state.scale}
                      scalekey={this.state.key}
                      highlightChord={this.state.highlightChord}
-                     playNote={this.playNote} />
-
-              {audioElements}
+                     notePlayer={this.props.notePlayer} />
 
               <div className="toolbox">
                 <div className="scale-tools">
@@ -428,6 +383,8 @@ const MusicExplorerApp = React.createClass({
 });
 
 ReactDOM.render(
-    <MusicExplorerApp />,
+    <MusicExplorerApp notePlayer={notePlayer} />,
     document.getElementById("app")
 );
+
+notePlayer.init();
