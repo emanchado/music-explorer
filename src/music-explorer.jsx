@@ -365,13 +365,15 @@ const MusicExplorerApp = React.createClass({
                 <div className="chord-tools">
                   <h1>Chords</h1>
                   <h2>Highlight chord</h2>
-                  <input type="text"
-                         size="7"
-                         className={chordBoxCss}
-                         value={this.state.chordName}
-                         onChange={this.onChangeChordName} />
-                  <button type="submit"
-                          onClick={this.onClickHighlightChord}>Highlight</button>
+                  <form action="#">
+                    <input type="text"
+                           size="7"
+                           className={chordBoxCss}
+                           value={this.state.chordName}
+                           onChange={this.onChangeChordName} />
+                    <button type="submit"
+                            onClick={this.onClickHighlightChord}>Highlight</button>
+                  </form>
 
                   <h2>Last used chords</h2>
                   <ul className="chords">{lastChordsMarkup}</ul>
