@@ -144,6 +144,7 @@ ol.piano {
             position: absolute;
             bottom: 20px;
             left: 10px;
+            pointer-events: none;
             text-align: center;
 
             .note-name {
