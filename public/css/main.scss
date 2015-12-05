@@ -70,6 +70,10 @@ h2 {
     margin-bottom: 0.3ex;
 }
 
+form button {
+    font-size: 150%;
+}
+
 footer {
     clear: both;
     padding-top: 4ex;
@@ -317,7 +321,7 @@ ul.chords {
 }
 
 .chord-name {
-    font-size: 200%;
+    font-size: 150%;
 }
 .chord-name.wrong {
     color: red;
