@@ -22,6 +22,9 @@ h2 {
   color: #555;
   margin-bottom: 0.3ex; }
 
+form button {
+  font-size: 150%; }
+
 footer {
   clear: both;
   padding-top: 4ex;
@@ -163,7 +166,7 @@ ol.piano {
     box-shadow: 0 5px 5px #aaa; }
     ol.piano li.in-chord .note-name {
       color: #eee;
-      background-color: #22b;
+      background-color: #22d;
       border-radius: 50%; }
     ol.piano li.in-chord .note-role {
       color: #333;
@@ -173,6 +176,9 @@ ol.piano {
       border-radius: 50%;
       background-color: #333;
       color: #eee; }
+    ol.piano li.in-chord .note-role-root + .note-name {
+      margin-left: -2px;
+      border: 2px solid #333; }
   ol.piano li.ebony.in-chord {
     background: #171c1a;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5f6265), color-stop(10%, #151b19), color-stop(100%, #171c1a));
@@ -190,6 +196,8 @@ ol.piano {
       border-radius: 50%;
       background-color: #eee;
       color: black; }
+    ol.piano li.ebony.in-chord .note-role-root + .note-name {
+      border-color: #eee; }
   ol.piano li.in-chord.out-scale {
     background: #fad0c6;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0b1ad), color-stop(10%, #f0e0e0), color-stop(100%, #fad0c6));
@@ -224,7 +232,7 @@ ul.chords {
     content: ""; }
 
 .chord-name {
-  font-size: 200%; }
+  font-size: 150%; }
 
 .chord-name.wrong {
   color: red; }
