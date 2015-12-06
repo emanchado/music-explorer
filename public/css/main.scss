@@ -25,7 +25,7 @@ $key-ebony-wrong-background-color3: #570c0a;
 $scale-highlight-color: #33f;
 $scale-out-background-color: red;
 $chord-highlight-color: #eee;
-$chord-highlight-background-color: #22b;
+$chord-highlight-background-color: #22d;
 $chord-highlight-note-role-color: #333;
 $chord-highlight-root-color: #eee;
 $chord-highlight-root-background-color: #333;
@@ -252,6 +252,10 @@ ol.piano {
             background-color: $chord-highlight-root-background-color;
             color: $chord-highlight-root-color;
         }
+        .note-role-root + .note-name {
+            margin-left: -2px;
+            border: 2px solid $chord-highlight-root-background-color;
+        }
     }
     li.ebony.in-chord {
         @include key-background($key-ebony-active-background-color1,
@@ -271,6 +275,9 @@ ol.piano {
             border-radius: 50%;
             background-color: $chord-highlight-ebony-root-background-color;
             color: $chord-highlight-ebony-root-color;
+        }
+        .note-role-root + .note-name {
+            border-color: $chord-highlight-ebony-root-background-color;
         }
     }
 
