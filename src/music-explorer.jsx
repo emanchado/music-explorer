@@ -15,6 +15,28 @@ const ACCIDENTAL_LABELS = {
 
 const INITIAL_SCALE = "major", INITIAL_KEY = "";
 
+const KNOWN_SCALES = [
+    {name: "major", label: "Major"},
+    {name: "minor", label: "Minor"},
+    {name: "melodicminor", label: "Melodic minor"},
+    {name: "harmonicminor", label: "Harmonic minor"},
+    {name: "majorpentatonic", label: "Major pentatonic"},
+    {name: "minorpentatonic", label: "Minor pentatonic"},
+
+    {name: "blues", label: "Blues"},
+    {name: "flamenco", label: "Flamenco"},
+    {name: "wholetone", label: "Whole tone"},
+    {name: "doubleharmonic", label: "Double harmonic"},
+
+    {name: "ionian", label: "Ionian"},
+    {name: "dorian", label: "Dorian"},
+    {name: "phrygian", label: "Phrygian"},
+    {name: "lydian", label: "Lydian"},
+    {name: "mixolydian", label: "Mixolydian"},
+    {name: "aeolian", label: "Aeolian"},
+    {name: "locrian", label: "Locrian"}
+];
+
 const PianoKey = React.createClass({
     noteInScale: function (note, scale) {
         if (scale) {
@@ -212,7 +234,7 @@ const ScaleSelector = React.createClass({
     },
 
     render: function() {
-        const scaleOptions = teoria.Scale.KNOWN_SCALES.map((scale) => {
+        const scaleOptions = KNOWN_SCALES.map((scale) => {
             return (
                 <option key={scale.name} value={scale.name}>{scale.label}</option>
             );
