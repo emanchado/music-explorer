@@ -27,6 +27,7 @@ const KNOWN_SCALES = [
     {name: "flamenco", label: "Flamenco"},
     {name: "wholetone", label: "Whole tone"},
     {name: "doubleharmonic", label: "Double harmonic"},
+    {name: "chromatic", label: "Chromatic"},
 
     {name: "ionian", label: "Ionian"},
     {name: "dorian", label: "Dorian"},
