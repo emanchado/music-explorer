@@ -195,7 +195,7 @@ const MatchingChords = React.createClass({
         if (scale) {
             return (
                 <div>
-                  <h2>Matching triad chords for <em>{this.props.keyName.toUpperCase()} {scale.label}</em></h2>
+                  <h2>Matching triad chords:</h2>
                   <ul className="chords">{matchingChordMarkup}</ul>
                 </div>
             );
