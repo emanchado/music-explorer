@@ -157,8 +157,9 @@ const Piano = React.createClass({
 
 const MatchingChords = React.createClass({
     chordSelectionHandler: function(chordName) {
-        return (/*e*/) => {
+        return (e) => {
             this.props.onSelectChord(chordName);
+            e.preventDefault();
         };
     },
 
@@ -310,7 +311,9 @@ const MusicExplorerApp = React.createClass({
         this.setState({chordName: newChordName});
     },
 
-    onClickHighlightChord: function(/*e*/) {
+    onClickHighlightChord: function(e) {
+        e.preventDefault();
+
         try {
             const newChord = teoria.chord(this.state.chordName);
             this.onSelectChord(newChord);
@@ -345,8 +348,9 @@ const MusicExplorerApp = React.createClass({
         if (lastChords.length) {
             let lastChordsItems = lastChords.map(chordName => {
                 const chord = teoria.chord(chordName),
-                      clickHandler = (/*ev*/) => {
+                      clickHandler = (e) => {
                           this.onSelectChord(chord);
+                          e.preventDefault();
                       };
 
                 return (
