@@ -3,7 +3,8 @@ const React = require("react"),
       R = require("ramda"),
       teoria = require("teoria"),
       RUList = require("../lib/RUList"),
-      notePlayer = require("../lib/note-player");
+      notePlayer = require("../lib/note-player"),
+      Mousetrap = require("mousetrap");
 
 const ACCIDENTAL_LABELS = {
     "#": "♯",
@@ -37,6 +38,8 @@ const KNOWN_SCALES = [
     {name: "aeolian", label: "Aeolian"},
     {name: "locrian", label: "Locrian"}
 ];
+
+const OCTAVE_KEYS = ["zsxdcvgbhnjm".split(""), "q2w3er5t6y7u".split("")];
 
 const PianoKey = React.createClass({
     noteInScale: function (note, scale) {
@@ -131,11 +134,13 @@ const Piano = React.createClass({
                              teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
               keys = R.flatten(R.range(0, this.props.notePlayer.NUMBER_OCTAVES).map((octaveNumber) => {
-                  return this.props.notePlayer.OCTAVE_NOTES.map((noteName) => {
+                  return this.props.notePlayer.OCTAVE_NOTES.map((noteName, noteIndex) => {
                       let reactKey = (octaveNumber + 1) + "-" + noteName,
                           playNoteHandler = () => {
                               this.props.notePlayer.playNote(octaveNumber + 1, noteName);
                           };
+                      Mousetrap.bind(OCTAVE_KEYS[octaveNumber][noteIndex],
+                                     playNoteHandler);
                       return (
                           <PianoKey octave={octaveNumber+1}
                                     key={reactKey}
