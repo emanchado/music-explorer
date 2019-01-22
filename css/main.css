@@ -98,7 +98,7 @@ ol.piano {
         height: 20px; }
   ol.piano li:hover {
     color: #C0C1BD; }
-  ol.piano li:active {
+  ol.piano li:active, ol.piano li.active {
     box-shadow: none;
     top: 5px;
     color: #333; }
