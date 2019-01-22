@@ -42,6 +42,22 @@ const KNOWN_SCALES = [
 const OCTAVE_KEYS = ["zsxdcvgbhnjm".split(""), "q2w3er5t6y7u".split("")];
 
 const PianoKey = React.createClass({
+    getInitialState() {
+        return {active: false};
+    },
+
+    componentDidMount: function() {
+        const note = teoria.note(this.props.noteName);
+        Mousetrap.bind(OCTAVE_KEYS[this.props.octave - 1][note.chroma()],
+                       () => {
+                           this.setState({active: true});
+                           this.playNote();
+                           setTimeout(() => {
+                               this.setState({active: false});
+                           }, 300);
+                       });
+    },
+
     noteInScale: function (note, scale) {
         if (scale) {
             const scaleNotes = scale.notes();
@@ -98,6 +114,10 @@ const PianoKey = React.createClass({
         return rawNoteName.toUpperCase();
     },
 
+    playNote: function() {
+        this.props.notePlayer.playNote(this.props.octave, this.props.noteName);
+    },
+
     render: function() {
         const note = teoria.note(this.props.noteName),
               noteInScale = this.noteInScale(note, this.props.scale),
@@ -111,12 +131,13 @@ const PianoKey = React.createClass({
               chordHighlightClassName = noteInChord ? "in-chord" : "",
               className = (note.accidental().length ? "ebony" : "") + " " +
                           scaleHighlightClassName + " " +
-                          chordHighlightClassName;
+                          chordHighlightClassName +
+                          (this.state.active ? " active" : "");
 
         return (
             <li key={this.props.noteName}
                 className={className}
-                onClick={this.props.handleClick}>
+                onClick={this.playNote}>
               <div className="note">
                 {this.roleInChordDiv(this.props.chord, noteInChord)}
                 <div className="note-name">{label}</div>
@@ -134,20 +155,18 @@ const Piano = React.createClass({
                              teoria.note(scaleKeyName + "4").scale(scaleName) :
                              null,
               keys = R.flatten(R.range(0, this.props.notePlayer.NUMBER_OCTAVES).map((octaveNumber) => {
-                  return this.props.notePlayer.OCTAVE_NOTES.map((noteName, noteIndex) => {
+                  return this.props.notePlayer.OCTAVE_NOTES.map((noteName) => {
                       let reactKey = (octaveNumber + 1) + "-" + noteName,
                           playNoteHandler = () => {
                               this.props.notePlayer.playNote(octaveNumber + 1, noteName);
                           };
-                      Mousetrap.bind(OCTAVE_KEYS[octaveNumber][noteIndex],
-                                     playNoteHandler);
                       return (
                           <PianoKey octave={octaveNumber+1}
                                     key={reactKey}
                                     noteName={noteName}
                                     scale={currentScale}
                                     chord={this.props.highlightChord}
-                                    handleClick={playNoteHandler} />
+                                    notePlayer={this.props.notePlayer} />
                       );
                   });
               }));

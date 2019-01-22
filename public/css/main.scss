@@ -160,7 +160,7 @@ ol.piano {
     li:hover {
         color: $note-hover-color;
     }
-    li:active {
+    li:active, li.active {
         box-shadow: none;
         top: 5px;
         color: $note-active-color;
