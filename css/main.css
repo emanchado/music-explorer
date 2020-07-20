@@ -157,6 +157,8 @@ ol.piano {
     box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
     border-color: #000;
     border-bottom-color: #424546; }
+    ol.piano li.ebony.in-scale .note-name {
+      color: #77f; }
   ol.piano li.in-chord {
     background: #faf0e6;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #c0c1bd), color-stop(10%, #f0f0f0), color-stop(100%, #faf0e6));
