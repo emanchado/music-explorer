@@ -23,6 +23,7 @@ $key-ebony-wrong-background-color1: #7f5255;
 $key-ebony-wrong-background-color2: #350b09;
 $key-ebony-wrong-background-color3: #570c0a;
 $scale-highlight-color: #33f;
+$scale-ebony-highlight-color: #77f;
 $scale-out-background-color: red;
 $chord-highlight-color: #eee;
 $chord-highlight-background-color: #55d;
@@ -225,6 +226,10 @@ ol.piano {
 
         border-color: #000;
         border-bottom-color: #424546;
+
+        .note-name {
+            color: $scale-ebony-highlight-color;
+        }
     }
 
     li.in-chord {
