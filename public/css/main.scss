@@ -271,6 +271,11 @@ ol.piano {
         border-color: #000;
         border-bottom-color: #424546;
 
+        .note-name {
+            color: $chord-highlight-color;
+            background-color: $chord-highlight-background-color;
+            border-radius: 50%;
+        }
         .note-role {
             width: 20px;
             height: 20px;

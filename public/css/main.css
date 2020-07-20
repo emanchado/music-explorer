@@ -190,6 +190,10 @@ ol.piano {
     box-shadow: 0 3px 5px #ccc, inset 0px 0px 0px 1px rgba(220, 220, 220, 0.2);
     border-color: #000;
     border-bottom-color: #424546; }
+    ol.piano li.ebony.in-chord .note-name {
+      color: #eee;
+      background-color: #55d;
+      border-radius: 50%; }
     ol.piano li.ebony.in-chord .note-role {
       width: 20px;
       height: 20px;
