@@ -14,7 +14,10 @@ const ACCIDENTAL_LABELS = {
     "": ""
 };
 
-const INITIAL_SCALE = "major", INITIAL_KEY = "";
+const initialParams = new URLSearchParams(window.location.search.substring(1));
+const INITIAL_SCALE = initialParams.get("scale") || "major";
+const INITIAL_KEY = initialParams.get("key") || "";
+const INITIAL_CHORD = initialParams.get("chord") || "";
 
 const KNOWN_SCALES = [
     {name: "major", label: "Major"},
@@ -307,6 +310,14 @@ const MusicExplorerApp = React.createClass({
         return {scale: INITIAL_SCALE,
                 key: INITIAL_KEY,
                 lastUsedChords: new RUList()};
+    },
+
+    componentDidMount: function() {
+        if (INITIAL_CHORD) {
+            const chord = teoria.chord(INITIAL_CHORD);
+            this.setState({highlightChord: chord,
+                           chordName: chord.name});
+        }
     },
 
     onChangeScale: function(newScale) {
