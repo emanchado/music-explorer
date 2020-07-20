@@ -16,7 +16,7 @@
     "babel-plugin-react-transform": "^1.1.1",
     "babelify": "^6.3.0",
     "browserify": "^11.2.0",
-    "node-sass": "^3.4",
+    "node-sass": "^4.14.1",
     "uglifyify": "^3.0.1",
     "uglifyjs": "^2.4.10",
     "watchify": "^3.4.0"

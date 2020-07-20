@@ -166,7 +166,7 @@ ol.piano {
     box-shadow: 0 5px 5px #aaa; }
     ol.piano li.in-chord .note-name {
       color: #eee;
-      background-color: #22d;
+      background-color: #55d;
       border-radius: 50%; }
     ol.piano li.in-chord .note-role {
       color: #333;
