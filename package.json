@@ -25,7 +25,7 @@
   "dependencies": {
     "mousetrap": "^1.6.2",
     "ramda": "^0.18.0",
-    "react": "^0.14.0",
+    "react": "^15.0.0",
     "react-dom": "^0.14.0",
     "teoria": "2.5.0"
   }
